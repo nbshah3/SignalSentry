@@ -13,9 +13,11 @@ from app.schemas.incidents import (
 )
 from app.schemas.postmortem import PostmortemResponse
 from app.schemas.root_cause import RootCauseResponse
+from app.services.event_bus import event_bus
 from app.services.incident_detector import IncidentDetector
 from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
+from app.services.simulator import IncidentSimulator
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
 
@@ -85,6 +87,38 @@ def incident_timeline(incident_id: int, session: Session = Depends(get_session))
         baseline=incident.baseline,
         observed=incident.observed,
     )
+
+
+@router.post("/simulate")
+async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, int]:
+    simulator = IncidentSimulator(session)
+    metrics, _ = simulator.run()
+    detector = IncidentDetector(session)
+    incidents = detector.evaluate_all_services()
+
+    for entry in metrics[-10:]:
+        await event_bus.publish(
+            {
+                "type": "metric_update",
+                "service": entry.service,
+                "metric": entry.metric,
+                "timestamp": entry.timestamp.isoformat(),
+                "value": entry.value,
+            }
+        )
+    for incident in incidents:
+        await event_bus.publish(
+            {
+                "type": "incident_alert",
+                "incident_id": incident.id,
+                "service": incident.service,
+                "metric": incident.metric,
+                "severity": incident.severity,
+                "summary": incident.summary,
+            }
+        )
+
+    return {"incidents": len(incidents)}
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
