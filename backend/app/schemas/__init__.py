@@ -1,6 +1,7 @@
 from .incidents import IncidentListResponse, IncidentRead, IncidentRefreshResponse
 from .logs import LogBatch, LogCreate, LogIngestResult
 from .metrics import MetricBatch, MetricIngestResult, MetricPointCreate, MetricQuery
+from .postmortem import PostmortemResponse
 from .root_cause import Evidence, Hypothesis, RootCauseResponse
 
 __all__ = [
@@ -14,6 +15,7 @@ __all__ = [
     "MetricIngestResult",
     "MetricPointCreate",
     "MetricQuery",
+    "PostmortemResponse",
     "Evidence",
     "Hypothesis",
     "RootCauseResponse",

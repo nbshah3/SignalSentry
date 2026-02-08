@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
+from app.core.config import settings
 from app.crud import incidents as incident_crud
 from app.db.session import get_session
 from app.models import Incident
 from app.schemas.incidents import IncidentListResponse, IncidentRead, IncidentRefreshResponse
+from app.schemas.postmortem import PostmortemResponse
 from app.schemas.root_cause import RootCauseResponse
 from app.services.incident_detector import IncidentDetector
+from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
@@ -46,3 +49,15 @@ def analyze_incident(incident_id: int, session: Session = Depends(get_session)) 
         raise HTTPException(status_code=404, detail="Incident not found")
     analyzer = RootCauseAnalyzer(session)
     return analyzer.analyze(incident)
+
+
+@router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
+def create_postmortem(incident_id: int, session: Session = Depends(get_session)) -> PostmortemResponse:
+    incident = session.get(Incident, incident_id)
+    if not incident:
+        raise HTTPException(status_code=404, detail="Incident not found")
+    analyzer = RootCauseAnalyzer(session)
+    analysis = analyzer.analyze(incident)
+    generator = PostmortemGenerator(settings.postmortem_export_dir)
+    artifacts = generator.generate(incident, analysis)
+    return artifacts.to_response()

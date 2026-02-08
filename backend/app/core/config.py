@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./signalsentry.db"
     log_level: str = "INFO"
     allowed_origins: List[str] = ["*"]
+    postmortem_export_dir: str = "./exports"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
