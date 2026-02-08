@@ -1,4 +1,5 @@
 import logging
+from statistics import fmean
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
@@ -16,11 +17,12 @@ from app.schemas.incidents import (
 )
 from app.schemas.postmortem import PostmortemResponse
 from app.schemas.root_cause import RootCauseResponse
+from app.services.anomaly import AnomalyAssessment
 from app.services.event_bus import event_bus
 from app.services.incident_detector import IncidentDetector
 from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
-from app.services.simulator import IncidentSimulator
+from app.services.simulator import IncidentSimulator, SimulationPlan
 
 logger = logging.getLogger(__name__)
 
@@ -130,6 +132,9 @@ async def simulate_incident(session: Session = Depends(get_session)) -> dict[str
     detector = IncidentDetector(session)
     incident = detector.evaluate_metric(plan.service, plan.metric)
 
+    if not incident:
+        incident = _create_simulated_incident(session, plan)
+
     for entry in metrics[-10:]:
         await _publish_metric_entry(entry)
 
@@ -137,7 +142,12 @@ async def simulate_incident(session: Session = Depends(get_session)) -> dict[str
     if incident:
         await _broadcast_incident(incident)
 
-    return {"ok": True, "incident_id": incident_id, "metrics_appended": len(metrics)}
+    return {
+        "ok": True,
+        "incident_id": incident_id,
+        "metrics_appended": len(metrics),
+        "logs_appended": len(logs),
+    }
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
@@ -175,3 +185,36 @@ async def _publish_metric_entry(entry: MetricPoint) -> None:
     }
     await event_bus.publish({"type": "metric_appended", **event})
     await event_bus.publish({"type": "metric_update", **event})
+
+
+def _create_simulated_incident(
+    session: Session, plan: SimulationPlan
+) -> Incident | None:
+    series = metric_crud.get_metric_series(session, plan.service, plan.metric, limit=80)
+    if len(series) < 12:
+        return None
+
+    baseline_values = [point.value for point in series[:-10]]
+    recent_values = [point.value for point in series[-10:]]
+    if not baseline_values:
+        return None
+
+    baseline = fmean(baseline_values)
+    observed = fmean(recent_values)
+    severity = min(100, int(abs(observed - baseline) / (abs(baseline) + 1e-6) * 120))
+    assessment = AnomalyAssessment(
+        severity=severity,
+        baseline=baseline,
+        observed=observed,
+        window_start=series[-10].timestamp,
+        window_end=series[-1].timestamp,
+        detector="simulation",
+        summary=f"{plan.metric} deviated during simulation",
+    )
+    return incident_crud.upsert_incident(
+        session=session,
+        incident_key=f"simulate:{plan.service}:{plan.metric}",
+        service=plan.service,
+        metric=plan.metric,
+        assessment=assessment,
+    )

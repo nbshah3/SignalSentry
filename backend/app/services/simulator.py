@@ -13,6 +13,10 @@ from app.models import LogEntry, MetricPoint
 from app.schemas import LogCreate, MetricPointCreate
 from app.seed import SERVICES
 
+__all__ = ["IncidentSimulator", "SimulationPlan"]
+
+SIM_SEED = 2024
+
 
 @dataclass
 class SimulationPlan:
@@ -64,7 +68,7 @@ PLANS: Tuple[SimulationPlan, ...] = (
 class IncidentSimulator:
     def __init__(self, session: Session) -> None:
         self.session = session
-        self.rng = random.Random()
+        self.rng = random.Random(SIM_SEED)
 
     def run(self, minutes: int = 45) -> Tuple[List[MetricPoint], List[LogEntry], SimulationPlan]:
         plan = self.rng.choice(PLANS)
