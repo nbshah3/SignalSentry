@@ -54,3 +54,22 @@ export type ServiceLogsResponse = {
   service: string;
   items: LogEntry[];
 };
+
+export type RootCauseResponse = {
+  incident_id: number;
+  service: string;
+  metric: string;
+  hypotheses: Array<{
+    title: string;
+    confidence: number;
+    evidence: Array<{ type: string; detail: string }>;
+  }>;
+};
+
+export type IncidentTimelineResponse = {
+  incident_id: number;
+  metric: string;
+  points: SparklinePoint[];
+  baseline?: number | null;
+  observed?: number | null;
+};

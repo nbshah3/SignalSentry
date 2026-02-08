@@ -30,3 +30,16 @@ class IncidentListResponse(BaseModel):
 
 class IncidentRefreshResponse(BaseModel):
     count: int
+
+
+class TimelinePoint(BaseModel):
+    timestamp: str
+    value: float
+
+
+class IncidentTimelineResponse(BaseModel):
+    incident_id: int
+    metric: str
+    points: List[TimelinePoint]
+    baseline: Optional[float] = None
+    observed: Optional[float] = None

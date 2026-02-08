@@ -2,7 +2,9 @@ import { apiGet } from '@/lib/api';
 import type {
   Incident,
   IncidentListResponse,
+  IncidentTimelineResponse,
   MetricSeriesResponse,
+  RootCauseResponse,
   ServiceLogsResponse,
   ServiceSummary,
   ServiceSummaryResponse,
@@ -11,6 +13,23 @@ import type {
 export async function fetchActiveIncidents(): Promise<Incident[]> {
   const data = await apiGet<IncidentListResponse>('/incidents/active');
   return data.items;
+}
+
+export async function fetchRecentIncidents(): Promise<Incident[]> {
+  const data = await apiGet<IncidentListResponse>('/incidents/recent');
+  return data.items;
+}
+
+export async function fetchIncident(incidentId: string): Promise<Incident> {
+  return apiGet<Incident>(`/incidents/${incidentId}`);
+}
+
+export async function fetchIncidentTimeline(incidentId: string): Promise<IncidentTimelineResponse> {
+  return apiGet<IncidentTimelineResponse>(`/incidents/${incidentId}/timeline`);
+}
+
+export async function fetchIncidentAnalysis(incidentId: string): Promise<RootCauseResponse> {
+  return apiGet<RootCauseResponse>(`/incidents/${incidentId}/analysis`);
 }
 
 export async function fetchServiceSummary(): Promise<ServiceSummary[]> {

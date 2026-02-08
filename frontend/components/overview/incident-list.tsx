@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import type { Incident } from '@/types/api';
 
 export function IncidentList({ incidents }: { incidents: Incident[] }) {
@@ -18,7 +20,7 @@ export function IncidentList({ incidents }: { incidents: Incident[] }) {
       <ul className="divide-y divide-slate-800">
         {incidents.map((incident) => (
           <li key={incident.id} className="px-6 py-4">
-            <div className="flex items-center justify-between">
+            <Link href={`/incidents/${incident.id}`} className="flex items-center justify-between">
               <div>
                 <p className="text-sm uppercase tracking-widest text-slate-500">{incident.service}</p>
                 <p className="text-lg font-semibold text-white">
@@ -33,7 +35,7 @@ export function IncidentList({ incidents }: { incidents: Incident[] }) {
                   {new Date(incident.window_end).toLocaleTimeString()}
                 </p>
               </div>
-            </div>
+            </Link>
           </li>
         ))}
       </ul>

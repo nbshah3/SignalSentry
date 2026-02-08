@@ -1,4 +1,9 @@
-from .incidents import IncidentListResponse, IncidentRead, IncidentRefreshResponse
+from .incidents import (
+    IncidentListResponse,
+    IncidentRead,
+    IncidentRefreshResponse,
+    IncidentTimelineResponse,
+)
 from .logs import LogBatch, LogCreate, LogIngestResult, LogRead
 from .metrics import MetricBatch, MetricIngestResult, MetricPointCreate, MetricQuery
 from .postmortem import PostmortemResponse
@@ -9,6 +14,7 @@ __all__ = [
     "IncidentListResponse",
     "IncidentRead",
     "IncidentRefreshResponse",
+    "IncidentTimelineResponse",
     "LogBatch",
     "LogCreate",
     "LogIngestResult",
