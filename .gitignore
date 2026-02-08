@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.env.*
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+.next/
+.npm/
+.pnp.*
+yarn.lock
+package-lock.json
+
+# Editors
+.vscode/
+.idea/
+.DS_Store
+
+# Build / artifacts
+.coverage
+htmlcov/
+dist/
+build/
+exports/*.pdf
+exports/*.json
+
+# Docker
+*.log
+
+# Misc
+.turbo/
+.vercel/
