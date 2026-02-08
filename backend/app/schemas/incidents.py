@@ -30,6 +30,7 @@ class IncidentListResponse(BaseModel):
 
 class IncidentRefreshResponse(BaseModel):
     count: int
+    reason: Optional[str] = None
 
 
 class TimelinePoint(BaseModel):

@@ -5,7 +5,7 @@ from app.core.config import settings
 from app.crud import incidents as incident_crud
 from app.crud import metrics as metric_crud
 from app.db.session import get_session
-from app.models import Incident
+from app.models import Incident, MetricPoint
 from app.schemas.incidents import (
     IncidentListResponse,
     IncidentRead,
@@ -40,9 +40,20 @@ def list_recent_incidents(session: Session = Depends(get_session)) -> IncidentLi
 
 
 @router.post("/refresh", response_model=IncidentRefreshResponse)
-def refresh_incidents(session: Session = Depends(get_session)) -> IncidentRefreshResponse:
+async def refresh_incidents(
+    session: Session = Depends(get_session),
+) -> IncidentRefreshResponse:
     detector = IncidentDetector(session)
-    incidents = detector.evaluate_all_services()
+    pairs = detector.candidate_pairs()
+    if not pairs:
+        return IncidentRefreshResponse(count=0, reason="no metrics available")
+
+    incidents = detector.evaluate_metrics(pairs)
+    if not incidents:
+        return IncidentRefreshResponse(count=0, reason="no anomalies detected")
+
+    for incident in incidents:
+        await _broadcast_incident(incident)
     return IncidentRefreshResponse(count=len(incidents))
 
 
@@ -99,35 +110,20 @@ def incident_timeline(
 
 
 @router.post("/simulate")
-async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, int]:
+async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, object]:
     simulator = IncidentSimulator(session)
-    metrics, _ = simulator.run()
+    metrics, logs, plan = simulator.run()
     detector = IncidentDetector(session)
-    incidents = detector.evaluate_all_services()
+    incident = detector.evaluate_metric(plan.service, plan.metric)
 
     for entry in metrics[-10:]:
-        await event_bus.publish(
-            {
-                "type": "metric_update",
-                "service": entry.service,
-                "metric": entry.metric,
-                "timestamp": entry.timestamp.isoformat(),
-                "value": entry.value,
-            }
-        )
-    for incident in incidents:
-        await event_bus.publish(
-            {
-                "type": "incident_alert",
-                "incident_id": incident.id,
-                "service": incident.service,
-                "metric": incident.metric,
-                "severity": incident.severity,
-                "summary": incident.summary,
-            }
-        )
+        await _publish_metric_entry(entry)
 
-    return {"incidents": len(incidents)}
+    incident_id = incident.id if incident else None
+    if incident:
+        await _broadcast_incident(incident)
+
+    return {"ok": True, "incident_id": incident_id, "metrics_appended": len(metrics)}
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
@@ -142,3 +138,26 @@ def create_postmortem(
     generator = PostmortemGenerator(settings.postmortem_export_dir)
     artifacts = generator.generate(incident, analysis)
     return artifacts.to_response()
+
+
+async def _broadcast_incident(incident: Incident) -> None:
+    payload = {
+        "incident_id": incident.id,
+        "service": incident.service,
+        "metric": incident.metric,
+        "severity": incident.severity,
+        "summary": incident.summary,
+    }
+    await event_bus.publish({"type": "incident_created", **payload})
+    await event_bus.publish({"type": "incident_alert", **payload})
+
+
+async def _publish_metric_entry(entry: MetricPoint) -> None:
+    event = {
+        "service": entry.service,
+        "metric": entry.metric,
+        "timestamp": entry.timestamp.isoformat(),
+        "value": entry.value,
+    }
+    await event_bus.publish({"type": "metric_appended", **event})
+    await event_bus.publish({"type": "metric_update", **event})

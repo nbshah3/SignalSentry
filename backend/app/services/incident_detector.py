@@ -52,8 +52,10 @@ class IncidentDetector:
         return incidents
 
     def evaluate_all_services(self) -> List[Incident]:
+        return self.evaluate_metrics(self.candidate_pairs())
+
+    def candidate_pairs(self) -> List[TrackedMetric]:
         tracked = incident_crud.list_tracked_metrics(self.session)
-        if not tracked:
-            # default to evaluating DEFAULT_METRICS for all services we have data for
-            tracked = metric_crud.list_service_metrics(self.session, DEFAULT_METRICS)
-        return self.evaluate_metrics(tracked)
+        if tracked:
+            return tracked
+        return metric_crud.list_service_metrics(self.session, DEFAULT_METRICS)
