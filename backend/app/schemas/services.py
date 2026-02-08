@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel
 
+from .logs import LogRead
 
 class SparklinePoint(BaseModel):
     timestamp: str
@@ -19,3 +20,14 @@ class ServiceSummary(BaseModel):
 
 class ServiceSummaryResponse(BaseModel):
     services: List[ServiceSummary]
+
+
+class ServiceMetricsResponse(BaseModel):
+    service: str
+    metric: str
+    points: List[SparklinePoint]
+
+
+class ServiceLogsResponse(BaseModel):
+    service: str
+    items: List[LogRead]

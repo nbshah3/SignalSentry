@@ -15,6 +15,9 @@ const NAV_LINKS = [
 export default function AppShell({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
+  const isActive = (href: string) =>
+    pathname === href || (href !== '/' && pathname.startsWith(href));
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="border-b border-slate-800 bg-slate-900/70 backdrop-blur">
@@ -35,7 +38,7 @@ export default function AppShell({ children }: PropsWithChildren) {
                 href={link.href}
                 className={cn(
                   'rounded-md px-3 py-2 text-slate-300 transition hover:bg-slate-800 hover:text-white',
-                  pathname === link.href && 'bg-slate-800 text-white'
+                  isActive(link.href) && 'bg-slate-800 text-white'
                 )}
               >
                 {link.label}

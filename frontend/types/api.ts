@@ -32,3 +32,25 @@ export type ServiceSummary = {
 export type ServiceSummaryResponse = {
   services: ServiceSummary[];
 };
+
+export type MetricSeriesResponse = {
+  service: string;
+  metric: string;
+  points: SparklinePoint[];
+};
+
+export type LogEntry = {
+  id: number;
+  service: string;
+  timestamp: string;
+  level: string;
+  message: string;
+  request_id?: string | null;
+  latency_ms?: number | null;
+  context?: Record<string, unknown> | null;
+};
+
+export type ServiceLogsResponse = {
+  service: string;
+  items: LogEntry[];
+};

@@ -1,7 +1,8 @@
 import json
 from datetime import datetime, timedelta
-from typing import Iterable, List, Sequence
+from typing import Iterable, List, Optional, Sequence
 
+from sqlalchemy import func
 from sqlmodel import Session, select
 
 from app.models import LogEntry
@@ -71,3 +72,21 @@ def get_logs_for_window(
         .limit(limit)
     )
     return session.exec(statement).all()
+
+
+def list_recent_logs(
+    session: Session,
+    service: str,
+    level: Optional[str] = None,
+    query: Optional[str] = None,
+    limit: int = 100,
+) -> List[LogEntry]:
+    statement = select(LogEntry).where(LogEntry.service == service)
+    if level:
+        statement = statement.where(LogEntry.level == level.upper())
+    if query:
+        statement = statement.where(func.lower(LogEntry.message).contains(query.lower()))
+
+    statement = statement.order_by(LogEntry.timestamp.desc()).limit(limit)
+    rows = session.exec(statement).all()
+    return list(reversed(rows))

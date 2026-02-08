@@ -25,3 +25,10 @@ class LogBatch(BaseModel):
 class LogIngestResult(BaseModel):
     ingested: int
     skipped: int
+
+
+class LogRead(LogBase):
+    id: int
+
+    class Config:
+        from_attributes = True
