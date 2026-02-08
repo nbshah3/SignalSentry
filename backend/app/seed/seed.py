@@ -1,164 +1,94 @@
 from __future__ import annotations
 
-import random
-from dataclasses import dataclass
-from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
+import json
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, List
 
 from sqlalchemy import delete, func, select
 from sqlmodel import Session
 
-from app.models import LogEntry, MetricPoint
+from app.crud import incidents as incident_crud
+from app.models import Incident, LogEntry, MetricPoint
+from app.schemas import LogCreate, MetricPointCreate
+from app.services.incident_detector import IncidentDetector
 
-SEED = 1337
-TOTAL_MINUTES = 360
-SERVICES = {
-    "auth": {
-        "latency_p95_ms": 140.0,
-        "error_rate": 0.02,
-        "cpu_pct": 48.0,
-        "memory_rss_mb": 620.0,
-    },
-    "payments": {
-        "latency_p95_ms": 120.0,
-        "error_rate": 0.015,
-        "cpu_pct": 54.0,
-        "memory_rss_mb": 580.0,
-    },
-    "search": {
-        "latency_p95_ms": 95.0,
-        "error_rate": 0.01,
-        "cpu_pct": 62.0,
-        "memory_rss_mb": 660.0,
-    },
-}
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+METRICS_FILE = DATA_DIR / "demo_metrics.json"
+LOGS_FILE = DATA_DIR / "demo_logs.json"
 
-
-@dataclass
-class IncidentWindow:
-    service: str
-    metric: str
-    start_minute: int
-    end_minute: int
-    delta: float = 0.0
-    trend_per_minute: float = 0.0
-    logs: Tuple[str, ...] = ()
-
-    def apply(self, minute: int, value: float) -> float:
-        if minute < self.start_minute or minute > self.end_minute:
-            return value
-        updated = value + self.delta
-        if self.trend_per_minute:
-            updated += (minute - self.start_minute) * self.trend_per_minute
-        return updated
-
-
-INCIDENTS: Tuple[IncidentWindow, ...] = (
-    IncidentWindow(
-        service="search",
-        metric="latency_p95_ms",
-        start_minute=160,
-        end_minute=210,
-        delta=190.0,
-        logs=(
-            "timeout contacting shard alpha",
-            "db saturation detected on replica",
-            "upstream request_id req-981 timed out",
-        ),
-    ),
-    IncidentWindow(
-        service="payments",
-        metric="error_rate",
-        start_minute=120,
-        end_minute=170,
-        delta=0.18,
-        logs=(
-            "connection reset from card network",
-            "5xx surge from fraud-service",
-            "payment gateway timeout",
-        ),
-    ),
-    IncidentWindow(
-        service="auth",
-        metric="memory_rss_mb",
-        start_minute=200,
-        end_minute=TOTAL_MINUTES - 1,
-        trend_per_minute=2.2,
-        logs=(
-            "memory leak suspected in token generator",
-            "OOM killer likely if usage continues",
-            "cache flush unable to reclaim memory",
-        ),
-    ),
-)
+SERVICES = ["auth-service", "payments", "search", "recommendation-engine"]
 
 
 def seed_sample_data(session: Session, *, force: bool = False) -> Dict[str, object]:
     metric_count = session.exec(select(func.count(MetricPoint.id))).one()
     log_count = session.exec(select(func.count(LogEntry.id))).one()
+
     if not force and (metric_count or log_count):
         return {"seeded": False, "reason": "dataset already present"}
 
     if force:
+        session.exec(delete(Incident))
         session.exec(delete(MetricPoint))
         session.exec(delete(LogEntry))
         session.commit()
 
-    metrics = _build_metrics()
-    logs = _build_logs()
+    metrics = [_build_metric(entry) for entry in _load_json(METRICS_FILE)]
+    logs = [_build_log(entry) for entry in _load_json(LOGS_FILE)]
     session.add_all(metrics)
     session.add_all(logs)
     session.commit()
-    return {"seeded": True, "metrics": len(metrics), "logs": len(logs)}
+
+    detector = IncidentDetector(session)
+    incidents = detector.evaluate_all_services()
+
+    return {
+        "seeded": True,
+        "metrics": len(metrics),
+        "logs": len(logs),
+        "incidents": len(incidents),
+    }
 
 
-def _build_metrics() -> List[MetricPoint]:
-    rng = random.Random(SEED)
-    base_time = datetime.utcnow() - timedelta(minutes=TOTAL_MINUTES)
-    metrics: List[MetricPoint] = []
-    for offset in range(TOTAL_MINUTES):
-        timestamp = base_time + timedelta(minutes=offset)
-        for service, config in SERVICES.items():
-            for metric, baseline in config.items():
-                value = _metric_with_noise(rng, baseline)
-                for window in INCIDENTS:
-                    if window.service == service and window.metric == metric:
-                        value = window.apply(offset, value)
-                if metric == "error_rate":
-                    value = max(value, 0.0)
-                metrics.append(
-                    MetricPoint(
-                        service=service,
-                        metric=metric,
-                        timestamp=timestamp,
-                        value=round(value, 4),
-                    )
-                )
-    return metrics
+def _build_metric(entry: Dict[str, object]) -> MetricPoint:
+    timestamp = _parse_timestamp(entry["timestamp"])
+    payload = MetricPointCreate(
+        service=entry["service"],
+        metric=entry["metric"],
+        timestamp=timestamp,
+        value=float(entry["value"]),
+    )
+    return MetricPoint.model_validate(payload)
 
 
-def _metric_with_noise(rng: random.Random, baseline: float) -> float:
-    if baseline == 0:
-        return 0.0
-    noise = rng.uniform(-0.05, 0.05) * baseline
-    return baseline + noise
+def _build_log(entry: Dict[str, object]) -> LogEntry:
+    payload = LogCreate(
+        service=entry["service"],
+        timestamp=_parse_timestamp(entry["timestamp"]),
+        level=entry.get("level", "INFO"),
+        request_id=entry.get("request_id"),
+        message=entry.get("message", ""),
+        latency_ms=entry.get("latency_ms"),
+        context=entry.get("context"),
+    )
+    return LogEntry(
+        service=payload.service,
+        timestamp=payload.timestamp,
+        level=payload.level,
+        request_id=payload.request_id,
+        message=payload.message,
+        latency_ms=payload.latency_ms,
+        context=json.dumps(payload.context) if payload.context else None,
+    )
 
 
-def _build_logs() -> List[LogEntry]:
-    base_time = datetime.utcnow() - timedelta(minutes=TOTAL_MINUTES)
-    logs: List[LogEntry] = []
-    for window in INCIDENTS:
-        for idx, message in enumerate(window.logs):
-            timestamp = base_time + timedelta(minutes=window.start_minute + idx * 3)
-            logs.append(
-                LogEntry(
-                    service=window.service,
-                    level="ERROR",
-                    timestamp=timestamp,
-                    request_id=f"{window.service}-{window.metric}-{idx}",
-                    message=message,
-                    latency_ms=320.0 if "timeout" in message else None,
-                    context=None,
-                )
-            )
-    return logs
+def _load_json(path: Path) -> List[Dict[str, object]]:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _parse_timestamp(value: str) -> datetime:
+    if value.endswith("Z"):
+        value = value[:-1] + "+00:00"
+    return datetime.fromisoformat(value)
