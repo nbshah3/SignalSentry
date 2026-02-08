@@ -6,12 +6,14 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./backend/.env
+    working_dir: /app/backend
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
-      - ./data:/app/data
+      - ./backend:/app/backend
+      - ./data:/app/data:ro
       - ./exports:/app/exports
+      - ./backend/signalsentry.db:/app/backend/signalsentry.db
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
