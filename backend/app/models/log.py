@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
+from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
 
@@ -14,4 +15,4 @@ class LogEntry(SQLModel, table=True):
     request_id: Optional[str] = Field(default=None, index=True)
     message: str
     latency_ms: Optional[float] = None
-    metadata: Optional[str] = None
+    context: Optional[str] = Field(default=None, sa_column=Column(Text))
