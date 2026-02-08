@@ -1,0 +1,2306 @@
+[
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 111.5337
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 0.0143
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 45.9426
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 602.8391
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 97.2465
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 0.0102
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 54.0393
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 556.0425
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 79.3754
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 0.0076
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 58.3118
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 640.3427
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 114.3184
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 0.0116
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 55.8244
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:00:00Z",
+    "value": 703.1459
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 106.9248
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 0.0151
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 48.4543
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 589.4029
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 97.9053
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 0.0102
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 51.1693
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 560.0178
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 83.6577
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 0.0079
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 57.5565
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 614.1898
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 124.1699
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 56.6892
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:15:00Z",
+    "value": 716.0812
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 110.3985
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 0.0157
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 46.4291
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 623.2265
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 98.1293
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 0.0101
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 53.8809
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 584.4864
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 81.6366
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 0.0076
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 58.3674
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 626.5208
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 114.9575
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 0.0117
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 52.8055
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:30:00Z",
+    "value": 684.4582
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 111.4925
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 0.0148
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 46.3899
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 601.9894
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 92.7863
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 0.0104
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 52.7698
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 586.3296
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 77.3691
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 0.0082
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 57.9804
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 632.2851
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 125.8743
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 0.0122
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 55.3132
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T00:45:00Z",
+    "value": 712.923
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 113.7714
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 0.0154
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 45.7265
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 590.9902
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 93.2468
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 0.0098
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 50.4971
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 605.6888
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 83.0109
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 0.0079
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 60.9326
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 633.3204
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 124.9746
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 0.012
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 53.7068
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:00:00Z",
+    "value": 682.2639
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 110.675
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 0.0146
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 47.3976
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 644.665
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 94.0443
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 0.0097
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 54.5872
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 580.5525
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 76.7273
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 0.0076
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 57.6579
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 648.1565
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 123.505
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 0.0119
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 52.5994
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:15:00Z",
+    "value": 691.7134
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 115.4573
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 0.015
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 49.2141
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 642.3683
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 90.3591
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 0.1902
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 52.9449
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 582.1443
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 78.1346
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 0.0081
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 57.6693
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 635.825
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 119.4447
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 0.0125
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 57.0672
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:30:00Z",
+    "value": 683.4372
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 110.0064
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 0.0145
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 48.9394
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 642.9722
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 93.0852
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 0.1901
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 52.5666
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 559.8647
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 82.1001
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 0.008
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 61.6718
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 641.9426
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 114.0069
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 0.0118
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 52.3571
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T01:45:00Z",
+    "value": 730.0369
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 114.1659
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 0.0155
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 46.0953
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 592.5914
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 98.5911
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 0.1904
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 49.8454
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 579.1874
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 216.5537
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 0.0082
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 61.595
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 616.2171
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 119.7034
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 53.7078
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:00:00Z",
+    "value": 726.0703
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 109.1545
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 0.0146
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 47.1847
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 634.2557
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 92.1609
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 0.1898
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 54.5748
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 588.6929
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 219.5048
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 0.008
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 57.726
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 622.3806
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 118.057
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 53.5156
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:15:00Z",
+    "value": 680.4152
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 105.2809
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 0.0152
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 45.726
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 648.636
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 98.4165
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 0.1896
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 50.6376
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 589.8007
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 217.7139
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 0.0077
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 62.6131
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 644.5468
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 119.6721
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 0.0123
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 56.6912
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:30:00Z",
+    "value": 678.3287
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 105.5662
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 0.0149
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 46.6408
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 624.9555
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 97.1762
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 0.1902
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 54.5177
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 556.7082
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 219.221
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 0.0079
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 62.17
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 623.914
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 116.2825
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 0.0119
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 54.5703
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T02:45:00Z",
+    "value": 684.4982
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 107.2479
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 0.0156
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 46.7327
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 652.9036
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 95.4781
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 0.1896
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 54.5963
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 599.4896
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 223.752
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 0.0083
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 62.0922
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 618.6439
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 119.8277
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 0.0117
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 54.4557
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:00:00Z",
+    "value": 669.1045
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 108.6687
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 0.0157
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 45.8965
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 651.6124
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 94.5726
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 0.0099
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 54.3781
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 608.7345
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 220.4461
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 0.0082
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 57.9288
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 626.9893
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 125.6245
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 55.2321
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:15:00Z",
+    "value": 717.3583
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 105.1288
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 0.0151
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 47.0134
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 659.3686
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 91.7456
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 0.0105
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 49.8166
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 561.7778
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 220.7603
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 0.0081
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 58.4112
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 615.6727
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 124.6834
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 0.0117
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 55.5199
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:30:00Z",
+    "value": 708.3567
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 109.1115
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 0.0151
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 47.1071
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 667.9518
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 92.1905
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 0.0102
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 50.6412
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 573.9556
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 81.3735
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 0.0078
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 58.8971
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 656.1193
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 114.8705
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 0.0119
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 57.7415
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T03:45:00Z",
+    "value": 734.7268
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 105.3059
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 0.0146
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 45.8964
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 671.3621
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 98.6182
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 0.0104
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 51.3215
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 560.1493
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 82.67
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 0.0082
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 60.6701
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 671.1829
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 121.8477
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 0.0114
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 56.7441
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:00:00Z",
+    "value": 685.9565
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 111.7973
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 0.0157
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 45.2812
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 624.1566
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 91.2668
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 0.0101
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 50.8162
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 586.0801
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 81.7409
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 0.0078
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 60.8054
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 624.895
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 119.8624
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 0.0125
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 56.9036
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:15:00Z",
+    "value": 671.4609
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 109.1593
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 0.0147
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 44.6667
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 668.3094
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 96.3026
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 0.0098
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 53.2544
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 582.9975
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 79.4215
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 0.0076
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 57.4515
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 664.5188
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 124.8471
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 56.8403
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:30:00Z",
+    "value": 705.7757
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 106.129
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 0.0144
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 46.0988
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 679.7369
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 97.8132
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 0.0104
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 54.0744
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 563.1844
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 77.9962
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 0.0077
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 61.6807
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 664.5846
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 118.8765
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 53.1
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T04:45:00Z",
+    "value": 730.0917
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 114.0107
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 0.0157
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 48.4606
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 682.1478
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 90.4855
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 0.0102
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 51.1274
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 604.9873
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 82.4179
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 0.0083
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 61.8645
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 625.0756
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 123.4485
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 0.0115
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 57.0469
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:00:00Z",
+    "value": 725.1015
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 106.9468
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 0.0155
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 46.8134
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 649.9218
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 97.8058
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 0.0097
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 49.5231
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 562.2015
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 78.6261
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 0.0083
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 62.8013
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 625.864
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 121.6978
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 0.0119
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 57.6463
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:15:00Z",
+    "value": 702.5351
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 114.8316
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 0.0144
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 49.2109
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 645.5712
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 99.3941
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 0.0098
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 49.9637
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 576.2047
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 81.8284
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 0.0079
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 60.6373
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 640.7311
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 118.6223
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 0.0121
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 53.651
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:30:00Z",
+    "value": 714.615
+  },
+  {
+    "service": "auth-service",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 104.5186
+  },
+  {
+    "service": "auth-service",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 0.0156
+  },
+  {
+    "service": "auth-service",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 47.1807
+  },
+  {
+    "service": "auth-service",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 682.6047
+  },
+  {
+    "service": "payments",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 97.2985
+  },
+  {
+    "service": "payments",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 0.0102
+  },
+  {
+    "service": "payments",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 51.294
+  },
+  {
+    "service": "payments",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 555.0585
+  },
+  {
+    "service": "search",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 81.3139
+  },
+  {
+    "service": "search",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 0.0079
+  },
+  {
+    "service": "search",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 58.8835
+  },
+  {
+    "service": "search",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 662.273
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "latency_ms",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 122.6371
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "error_rate",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 0.0118
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "cpu_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 53.9511
+  },
+  {
+    "service": "recommendation-engine",
+    "metric": "memory_usage",
+    "timestamp": "2024-04-01T05:45:00Z",
+    "value": 693.5875
+  }
+]
