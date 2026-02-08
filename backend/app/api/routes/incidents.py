@@ -127,27 +127,31 @@ def incident_timeline(
 
 @router.post("/simulate")
 async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, object]:
-    simulator = IncidentSimulator(session)
-    metrics, logs, plan = simulator.run()
-    detector = IncidentDetector(session)
-    incident = detector.evaluate_metric(plan.service, plan.metric)
+    try:
+        simulator = IncidentSimulator(session)
+        metrics, logs, plan = simulator.run()
+        detector = IncidentDetector(session)
+        incident = detector.evaluate_metric(plan.service, plan.metric)
 
-    if not incident:
-        incident = _create_simulated_incident(session, plan)
+        if not incident:
+            incident = _create_simulated_incident(session, plan)
 
-    for entry in metrics[-10:]:
-        await _publish_metric_entry(entry)
+        for entry in metrics[-10:]:
+            await _publish_metric_entry(entry)
 
-    incident_id = incident.id if incident else None
-    if incident:
-        await _broadcast_incident(incident)
+        incident_id = incident.id if incident else None
+        if incident:
+            await _broadcast_incident(incident)
 
-    return {
-        "ok": True,
-        "incident_id": incident_id,
-        "metrics_appended": len(metrics),
-        "logs_appended": len(logs),
-    }
+        return {
+            "ok": True,
+            "incident_id": incident_id,
+            "metrics_appended": len(metrics),
+            "logs_appended": len(logs),
+        }
+    except Exception as exc:  # pragma: no cover
+        logger.exception("simulation failed")
+        return {"ok": False, "reason": str(exc)}
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
