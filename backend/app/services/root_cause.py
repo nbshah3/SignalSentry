@@ -7,7 +7,8 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 
 from sqlmodel import Session
 
-from app.crud import logs as log_crud, metrics as metric_crud
+from app.crud import logs as log_crud
+from app.crud import metrics as metric_crud
 from app.models import Incident
 from app.schemas.root_cause import Evidence, Hypothesis, RootCauseResponse
 from app.services.incident_detector import DEFAULT_METRICS
@@ -71,7 +72,9 @@ class RootCauseAnalyzer:
                 Hypothesis(
                     title=hyp.title,
                     confidence=hyp.confidence,
-                    evidence=[Evidence(type=item.source, detail=item.detail) for item in hyp.evidence],
+                    evidence=[
+                        Evidence(type=item.source, detail=item.detail) for item in hyp.evidence
+                    ],
                 )
                 for hyp in ordered
             ],
@@ -128,7 +131,9 @@ class RootCauseAnalyzer:
                 source="metric",
                 detail=f"{incident.metric} and {metric} correlation {corr:.2f} across incident window",
             )
-            results.append(HypothesisResult(title=title, confidence=confidence, evidence=[evidence]))
+            results.append(
+                HypothesisResult(title=title, confidence=confidence, evidence=[evidence])
+            )
 
         # specialized heuristics
         if incident.metric == "memory_rss_mb":

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
-from typing import Iterable, List, Sequence, Tuple
+from datetime import datetime
+from typing import List, Sequence, Tuple
 
 from sqlmodel import Session, select
 
@@ -18,7 +18,9 @@ def upsert_incident(
     metric: str,
     assessment: AnomalyAssessment,
 ) -> Incident:
-    statement = select(Incident).where(Incident.incident_key == incident_key, Incident.status == "open")
+    statement = select(Incident).where(
+        Incident.incident_key == incident_key, Incident.status == "open"
+    )
     incident = session.exec(statement).first()
 
     if incident:

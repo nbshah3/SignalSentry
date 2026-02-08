@@ -3,7 +3,8 @@ import json
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session
 
-from app.crud import logs as log_crud, metrics as metric_crud
+from app.crud import logs as log_crud
+from app.crud import metrics as metric_crud
 from app.db.session import get_session
 from app.models import LogEntry
 from app.schemas import LogRead, ServiceLogsResponse, ServiceMetricsResponse, ServiceSummaryResponse
@@ -40,7 +41,9 @@ def service_logs(
     limit: int = Query(100, ge=10, le=500),
     session: Session = Depends(get_session),
 ) -> ServiceLogsResponse:
-    logs = log_crud.list_recent_logs(session, service=service, level=level, query=query, limit=limit)
+    logs = log_crud.list_recent_logs(
+        session, service=service, level=level, query=query, limit=limit
+    )
     items = [_serialize_log(entry) for entry in logs]
     return ServiceLogsResponse(service=service, items=items)
 

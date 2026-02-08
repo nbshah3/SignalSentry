@@ -91,7 +91,16 @@ def parse_log_line(line: str) -> Optional[LogCreate]:
     if latency_raw:
         latency_ms = _parse_latency(latency_raw)
 
-    context_keys = {"timestamp", "level", "service", "message", "request_id", "requestid", "latency_ms", "latency"}
+    context_keys = {
+        "timestamp",
+        "level",
+        "service",
+        "message",
+        "request_id",
+        "requestid",
+        "latency_ms",
+        "latency",
+    }
     context = {k: v for k, v in kv_store.items() if k not in context_keys}
     if not context:
         context = None

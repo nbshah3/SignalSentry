@@ -7,7 +7,8 @@ from typing import List, Tuple
 
 from sqlmodel import Session
 
-from app.crud import logs as log_crud, metrics as metric_crud
+from app.crud import logs as log_crud
+from app.crud import metrics as metric_crud
 from app.models import LogEntry, MetricPoint
 from app.schemas import LogCreate, MetricPointCreate
 

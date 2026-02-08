@@ -75,7 +75,11 @@ class PostmortemGenerator:
         )
 
     def _build_payload(self, incident: Incident, analysis: RootCauseResponse) -> Dict[str, object]:
-        top_hypothesis = analysis.hypotheses[0].title if analysis.hypotheses else incident.summary or "Incident detected"
+        top_hypothesis = (
+            analysis.hypotheses[0].title
+            if analysis.hypotheses
+            else incident.summary or "Incident detected"
+        )
         action_items = ACTION_HINTS.get(incident.metric, ["Complete RCA and document mitigations."])
         timeline = [
             {"label": "Window start", "timestamp": incident.window_start.isoformat()},
@@ -121,7 +125,9 @@ class PostmortemGenerator:
             c.drawString(72, y, line)
             y -= 16
 
-        y = self._write_section(c, y - 8, "Hypotheses", payload["analysis"].get("hypotheses", []), height)
+        y = self._write_section(
+            c, y - 8, "Hypotheses", payload["analysis"].get("hypotheses", []), height
+        )
         y = self._write_list_section(c, y, "Action Items", payload["action_items"], height)
         y = self._write_list_section(
             c,
@@ -134,7 +140,14 @@ class PostmortemGenerator:
         c.showPage()
         c.save()
 
-    def _write_section(self, c: canvas.Canvas, y: float, title: str, hypotheses: List[Dict[str, object]], page_height: float) -> float:
+    def _write_section(
+        self,
+        c: canvas.Canvas,
+        y: float,
+        title: str,
+        hypotheses: List[Dict[str, object]],
+        page_height: float,
+    ) -> float:
         if y < 120:
             c.showPage()
             y = page_height - 72
@@ -160,7 +173,9 @@ class PostmortemGenerator:
                 y -= 12
         return y
 
-    def _write_list_section(self, c: canvas.Canvas, y: float, title: str, items: List[str], page_height: float) -> float:
+    def _write_list_section(
+        self, c: canvas.Canvas, y: float, title: str, items: List[str], page_height: float
+    ) -> float:
         if y < 120:
             c.showPage()
             y = page_height - 72

@@ -20,7 +20,9 @@ def create_metric(session: Session, metric_in: MetricPointCreate) -> MetricPoint
     return metric
 
 
-def bulk_create_metrics(session: Session, metric_points: Iterable[MetricPointCreate]) -> List[MetricPoint]:
+def bulk_create_metrics(
+    session: Session, metric_points: Iterable[MetricPointCreate]
+) -> List[MetricPoint]:
     entries = [
         MetricPoint(
             service=item.service,
@@ -43,7 +45,9 @@ def bulk_create_metrics(session: Session, metric_points: Iterable[MetricPointCre
     return entries
 
 
-def get_metric_series(session: Session, service: str, metric: str, limit: int = 200) -> List[MetricPoint]:
+def get_metric_series(
+    session: Session, service: str, metric: str, limit: int = 200
+) -> List[MetricPoint]:
     statement = (
         select(MetricPoint)
         .where(MetricPoint.service == service, MetricPoint.metric == metric)

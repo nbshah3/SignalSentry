@@ -2,9 +2,8 @@ from datetime import datetime, timedelta
 from typing import Iterator
 
 import pytest
+from app.models import MetricPoint
 from sqlmodel import Session, SQLModel, create_engine
-
-from app.models import Incident, LogEntry, MetricPoint
 
 
 @pytest.fixture()

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from .logs import LogRead
 
+
 class SparklinePoint(BaseModel):
     timestamp: str
     value: float

@@ -48,7 +48,6 @@ class ServiceSummaryBuilder:
             if not series:
                 continue
             payload[metric] = [
-                {"timestamp": point.timestamp.isoformat(), "value": point.value}
-                for point in series
+                {"timestamp": point.timestamp.isoformat(), "value": point.value} for point in series
             ]
         return payload

@@ -4,9 +4,10 @@ from typing import Iterable, List, Sequence, Tuple
 
 from sqlmodel import Session
 
-from app.crud import incidents as incident_crud, metrics as metric_crud
+from app.crud import incidents as incident_crud
+from app.crud import metrics as metric_crud
 from app.models import Incident
-from app.services.anomaly import AnomalyAssessment, detect_for_series
+from app.services.anomaly import detect_for_series
 
 TrackedMetric = Tuple[str, str]
 DEFAULT_METRICS: Sequence[str] = (
@@ -22,7 +23,9 @@ class IncidentDetector:
         self.session = session
 
     def evaluate_metric(self, service: str, metric: str) -> Incident | None:
-        series = metric_crud.get_metric_series(self.session, service=service, metric=metric, limit=240)
+        series = metric_crud.get_metric_series(
+            self.session, service=service, metric=metric, limit=240
+        )
         if not series:
             return None
 
