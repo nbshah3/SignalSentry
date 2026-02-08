@@ -8,7 +8,6 @@ from typing import Dict, List
 from sqlalchemy import delete, func, select
 from sqlmodel import Session
 
-from app.crud import incidents as incident_crud
 from app.models import Incident, LogEntry, MetricPoint
 from app.schemas import LogCreate, MetricPointCreate
 from app.services.incident_detector import IncidentDetector
