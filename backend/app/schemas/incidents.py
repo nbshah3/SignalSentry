@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -29,7 +29,8 @@ class IncidentListResponse(BaseModel):
 
 
 class IncidentRefreshResponse(BaseModel):
-    count: int
+    status: Literal["ok", "error"]
+    incidents_created: int
     reason: Optional[str] = None
 
 

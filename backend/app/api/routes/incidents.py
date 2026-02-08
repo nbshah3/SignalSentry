@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
@@ -19,6 +21,8 @@ from app.services.incident_detector import IncidentDetector
 from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
 from app.services.simulator import IncidentSimulator
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
 
@@ -44,17 +48,27 @@ async def refresh_incidents(
     session: Session = Depends(get_session),
 ) -> IncidentRefreshResponse:
     detector = IncidentDetector(session)
-    pairs = detector.candidate_pairs()
-    if not pairs:
-        return IncidentRefreshResponse(count=0, reason="no metrics available")
+    try:
+        pairs = detector.candidate_pairs()
+        if not pairs:
+            return IncidentRefreshResponse(
+                status="ok", incidents_created=0, reason="no metrics available"
+            )
 
-    incidents = detector.evaluate_metrics(pairs)
-    if not incidents:
-        return IncidentRefreshResponse(count=0, reason="no anomalies detected")
+        incidents = detector.evaluate_metrics(pairs)
+        if not incidents:
+            return IncidentRefreshResponse(
+                status="ok", incidents_created=0, reason="no anomalies detected"
+            )
 
-    for incident in incidents:
-        await _broadcast_incident(incident)
-    return IncidentRefreshResponse(count=len(incidents))
+        for incident in incidents:
+            await _broadcast_incident(incident)
+        return IncidentRefreshResponse(status="ok", incidents_created=len(incidents))
+    except Exception as exc:  # pragma: no cover - defensive path
+        logger.exception("incident refresh failed")
+        return IncidentRefreshResponse(
+            status="error", incidents_created=0, reason=str(exc)
+        )
 
 
 @router.post("/{incident_id}/resolve", response_model=IncidentRead)
