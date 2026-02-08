@@ -73,3 +73,9 @@ export type IncidentTimelineResponse = {
   baseline?: number | null;
   observed?: number | null;
 };
+
+export type IncidentRefreshResponse = {
+  status: 'ok' | 'error';
+  incidents_created: number;
+  reason?: string | null;
+};

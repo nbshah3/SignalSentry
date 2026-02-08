@@ -2,6 +2,7 @@ import { apiGet, apiPost } from '@/lib/api';
 import type {
   Incident,
   IncidentListResponse,
+  IncidentRefreshResponse,
   IncidentTimelineResponse,
   MetricSeriesResponse,
   RootCauseResponse,
@@ -19,8 +20,8 @@ export async function ensureDemoData(): Promise<boolean> {
   }
   try {
     const result = await apiPost<{ seeded?: boolean; reason?: string }>(`/admin/seed`);
-    await apiPost<{ count: number; reason?: string }>(`/incidents/refresh`);
-    return Boolean(result.seeded);
+    const refresh = await apiPost<IncidentRefreshResponse>(`/incidents/refresh`);
+    return Boolean(result.seeded || refresh.incidents_created);
   } catch (error) {
     console.warn('auto-seed failed', error);
     return false;
