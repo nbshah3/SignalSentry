@@ -1,0 +1,6 @@
+{"timestamp": "2024-03-01T01:02:00Z", "service": "api-gateway", "level": "ERROR", "latency_ms": 320, "message": "Checkout timeout while waiting on db-primary", "context": {"request_id": "req-501", "path": "/checkout", "keyword": "timeout"}}
+{"timestamp": "2024-03-01T01:05:00Z", "service": "api-gateway", "level": "ERROR", "latency_ms": 410, "message": "DB saturation suspected: connection pool exhausted", "context": {"request_id": "req-777", "path": "/orders", "keyword": "DB saturation"}}
+{"timestamp": "2024-03-01T00:34:00Z", "service": "auth-service", "level": "ERROR", "message": "Increased 5xx rate from identity provider", "context": {"request_id": "req-320", "upstream": "idp", "keyword": "5xx"}}
+{"timestamp": "2024-03-01T00:36:00Z", "service": "auth-service", "level": "ERROR", "message": "token issuance failed: connection reset by peer", "context": {"request_id": "req-458", "keyword": "connection reset"}}
+{"timestamp": "2024-03-01T01:30:00Z", "service": "analytics-worker", "level": "WARN", "message": "memory usage exceeded 90% of container limit", "context": {"keyword": "memory leak", "rss_mb": 1024}}
+{"timestamp": "2024-03-01T01:40:00Z", "service": "analytics-worker", "level": "ERROR", "message": "process unstable: OOM killer likely", "context": {"keyword": "OOM", "rss_mb": 1180}}
