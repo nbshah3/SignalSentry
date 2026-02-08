@@ -22,6 +22,7 @@ class MetricBatch(BaseModel):
 class MetricIngestResult(BaseModel):
     ingested: int
     skipped: int
+    incidents_triggered: int = 0
 
 
 class MetricQuery(BaseModel):

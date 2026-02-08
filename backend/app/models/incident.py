@@ -17,4 +17,7 @@ class Incident(SQLModel, table=True):
     window_end: datetime
     baseline: Optional[float] = None
     observed: Optional[float] = None
+    detector: str = Field(default="zscore_ewma")
+    summary: Optional[str] = None
     status: str = Field(default="open")
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
