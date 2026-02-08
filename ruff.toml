@@ -1,0 +1,5 @@
+line-length = 100
+src = ["backend/app"]
+target-version = "py311"
+select = ["E", "F", "I", "B"]
+ignore = ["E501"]
