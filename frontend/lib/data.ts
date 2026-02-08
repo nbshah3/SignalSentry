@@ -1,4 +1,4 @@
-import { apiGet } from '@/lib/api';
+import { apiGet, apiPost } from '@/lib/api';
 import type {
   Incident,
   IncidentListResponse,
@@ -9,6 +9,23 @@ import type {
   ServiceSummary,
   ServiceSummaryResponse,
 } from '@/types/api';
+
+const SHOULD_AUTO_SEED =
+  process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_AUTO_SEED === 'true';
+
+export async function ensureDemoData(): Promise<boolean> {
+  if (!SHOULD_AUTO_SEED) {
+    return false;
+  }
+  try {
+    const result = await apiPost<{ seeded?: boolean; reason?: string }>(`/admin/seed`);
+    await apiPost<{ count: number; reason?: string }>(`/incidents/refresh`);
+    return Boolean(result.seeded);
+  } catch (error) {
+    console.warn('auto-seed failed', error);
+    return false;
+  }
+}
 
 export async function fetchActiveIncidents(): Promise<Incident[]> {
   const data = await apiGet<IncidentListResponse>('/incidents/active');

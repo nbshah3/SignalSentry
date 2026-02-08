@@ -14,14 +14,16 @@ const STREAM_URL = (process.env.NEXT_PUBLIC_STREAM_URL || 'http://localhost:8000
 export function OverviewClient({
   initialIncidents,
   initialServices,
+  initialSeedMessage = null,
 }: {
   initialIncidents: Incident[];
   initialServices: ServiceSummary[];
+  initialSeedMessage?: string | null;
 }) {
   const [incidents, setIncidents] = useState<Incident[]>(initialIncidents);
   const [services, setServices] = useState<ServiceSummary[]>(initialServices);
   const [isSimulating, setIsSimulating] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(initialSeedMessage);
   const lastRefresh = useRef<number>(Date.now());
 
   const refreshServices = useCallback(async () => {
@@ -44,11 +46,14 @@ export function OverviewClient({
     source.onmessage = async (event) => {
       try {
         const payload = JSON.parse(event.data);
-        if (payload.type === 'incident_alert' && payload.incident_id) {
+        if (
+          (payload.type === 'incident_alert' || payload.type === 'incident_created') &&
+          payload.incident_id
+        ) {
           const incident = await apiGet<Incident>(`/incidents/${payload.incident_id}`);
           upsertIncident(incident);
         }
-        if (payload.type === 'metric_update') {
+        if (payload.type === 'metric_update' || payload.type === 'metric_appended') {
           refreshServices();
         }
       } catch (error) {
@@ -61,8 +66,16 @@ export function OverviewClient({
   const runSimulation = useCallback(async () => {
     try {
       setIsSimulating(true);
-      const result = await apiPost<{ incidents: number }>('/incidents/simulate');
-      setMessage(`Simulated ${result.incidents} incidents`);
+      const result = await apiPost<{ ok: boolean; incident_id?: number | null; metrics_appended?: number }>(
+        '/incidents/simulate'
+      );
+      if (result.incident_id) {
+        setMessage(`Simulated incident ${result.incident_id}`);
+      } else if (result.metrics_appended) {
+        setMessage(`Appended ${result.metrics_appended} metrics`);
+      } else {
+        setMessage('Simulation completed');
+      }
       // refresh lists after backend work completes
       const data = await apiGet<IncidentListResponse>('/incidents/active');
       setIncidents(data.items);
