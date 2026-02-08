@@ -1,7 +1,8 @@
 import json
-from typing import Iterable, Sequence
+from datetime import datetime, timedelta
+from typing import Iterable, List, Sequence
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.models import LogEntry
 from app.schemas import LogCreate
@@ -47,3 +48,26 @@ def bulk_create_logs(session: Session, logs: Iterable[LogCreate]) -> Sequence[Lo
         session.refresh(entry)
 
     return entries
+
+
+def get_logs_for_window(
+    session: Session,
+    service: str,
+    window_start: datetime,
+    window_end: datetime,
+    limit: int = 200,
+    padding_minutes: int = 5,
+) -> List[LogEntry]:
+    lower = window_start - timedelta(minutes=padding_minutes)
+    upper = window_end + timedelta(minutes=padding_minutes)
+    statement = (
+        select(LogEntry)
+        .where(
+            LogEntry.service == service,
+            LogEntry.timestamp >= lower,
+            LogEntry.timestamp <= upper,
+        )
+        .order_by(LogEntry.timestamp)
+        .limit(limit)
+    )
+    return session.exec(statement).all()

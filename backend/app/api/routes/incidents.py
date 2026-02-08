@@ -3,8 +3,11 @@ from sqlmodel import Session
 
 from app.crud import incidents as incident_crud
 from app.db.session import get_session
+from app.models import Incident
 from app.schemas.incidents import IncidentListResponse, IncidentRead, IncidentRefreshResponse
+from app.schemas.root_cause import RootCauseResponse
 from app.services.incident_detector import IncidentDetector
+from app.services.root_cause import RootCauseAnalyzer
 
 router = APIRouter(prefix="/incidents", tags=["incidents"])
 
@@ -34,3 +37,12 @@ def resolve_incident(incident_id: int, session: Session = Depends(get_session)) 
     if not incident:
         raise HTTPException(status_code=404, detail="Incident not found")
     return IncidentRead.model_validate(incident)
+
+
+@router.get("/{incident_id}/analysis", response_model=RootCauseResponse)
+def analyze_incident(incident_id: int, session: Session = Depends(get_session)) -> RootCauseResponse:
+    incident = session.get(Incident, incident_id)
+    if not incident:
+        raise HTTPException(status_code=404, detail="Incident not found")
+    analyzer = RootCauseAnalyzer(session)
+    return analyzer.analyze(incident)
