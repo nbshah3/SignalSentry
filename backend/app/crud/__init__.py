@@ -1,3 +1,3 @@
-from . import logs
+from . import logs, metrics
 
-__all__ = ["logs"]
+__all__ = ["logs", "metrics"]
