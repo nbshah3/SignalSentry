@@ -1,4 +1,10 @@
-const API_BASE = (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const stripTrailingSlash = (value: string) => value.replace(/\/$/, '');
+
+const publicBase = stripTrailingSlash(
+  process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'
+);
+const internalBase = stripTrailingSlash(process.env.API_INTERNAL_URL || publicBase);
+const API_BASE = typeof window === 'undefined' ? internalBase : publicBase;
 const API_PREFIX = `${API_BASE}/api/v1`;
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
