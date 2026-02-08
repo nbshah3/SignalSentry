@@ -3,6 +3,7 @@ from .logs import LogBatch, LogCreate, LogIngestResult
 from .metrics import MetricBatch, MetricIngestResult, MetricPointCreate, MetricQuery
 from .postmortem import PostmortemResponse
 from .root_cause import Evidence, Hypothesis, RootCauseResponse
+from .services import ServiceSummaryResponse
 
 __all__ = [
     "IncidentListResponse",
@@ -19,4 +20,5 @@ __all__ = [
     "Evidence",
     "Hypothesis",
     "RootCauseResponse",
+    "ServiceSummaryResponse",
 ]

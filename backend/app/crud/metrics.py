@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 from sqlmodel import Session, select
 
@@ -54,6 +54,16 @@ def get_metric_series(session: Session, service: str, metric: str, limit: int = 
     return list(reversed(results))
 
 
+def get_latest_metric(session: Session, service: str, metric: str) -> Optional[MetricPoint]:
+    statement = (
+        select(MetricPoint)
+        .where(MetricPoint.service == service, MetricPoint.metric == metric)
+        .order_by(MetricPoint.timestamp.desc())
+        .limit(1)
+    )
+    return session.exec(statement).first()
+
+
 def get_metrics_window(
     session: Session,
     service: str,
@@ -81,5 +91,11 @@ def get_metrics_window(
 
 def get_metrics_for_service(session: Session, service: str) -> List[str]:
     statement = select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
+    rows = session.exec(statement).all()
+    return [row[0] for row in rows]
+
+
+def list_services(session: Session) -> List[str]:
+    statement = select(MetricPoint.service).distinct()
     rows = session.exec(statement).all()
     return [row[0] for row in rows]
