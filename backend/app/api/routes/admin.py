@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 @router.post("/seed")
-def seed_endpoint(force: bool = False, session: Session = Depends(get_session)) -> dict[str, object]:
+def seed_endpoint(
+    force: bool = False, session: Session = Depends(get_session)
+) -> dict[str, object]:
     try:
         result = seed_sample_data(session, force=force)
         return {"status": "ok", **result}

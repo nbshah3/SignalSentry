@@ -68,9 +68,7 @@ async def refresh_incidents(
         return IncidentRefreshResponse(status="ok", incidents_created=len(incidents))
     except Exception as exc:  # pragma: no cover - defensive path
         logger.exception("incident refresh failed")
-        return IncidentRefreshResponse(
-            status="error", incidents_created=0, reason=str(exc)
-        )
+        return IncidentRefreshResponse(status="error", incidents_created=0, reason=str(exc))
 
 
 @router.post("/{incident_id}/resolve", response_model=IncidentRead)
@@ -191,9 +189,7 @@ async def _publish_metric_entry(entry: MetricPoint) -> None:
     await event_bus.publish({"type": "metric_update", **event})
 
 
-def _create_simulated_incident(
-    session: Session, plan: SimulationPlan
-) -> Incident | None:
+def _create_simulated_incident(session: Session, plan: SimulationPlan) -> Incident | None:
     series = metric_crud.get_metric_series(session, plan.service, plan.metric, limit=80)
     if len(series) < 12:
         return None

@@ -78,9 +78,7 @@ class IncidentSimulator:
         logs = log_crud.bulk_create_logs(self.session, logs_payload)
         return list(metrics), list(logs), plan
 
-    def _build_metrics(
-        self, plan: SimulationPlan, minutes: int
-    ) -> List[MetricPointCreate]:
+    def _build_metrics(self, plan: SimulationPlan, minutes: int) -> List[MetricPointCreate]:
         baseline = SERVICES.get(plan.service, {}).get(plan.metric, 100.0)
         latest = metric_crud.get_latest_metric(self.session, plan.service, plan.metric)
         start_time = latest.timestamp if latest else datetime.utcnow()
