@@ -99,7 +99,29 @@ def get_metrics_for_service(session: Session, service: str) -> List[str]:
     return [row[0] for row in rows]
 
 
-def list_services(session: Session) -> List[str]:
-    statement = select(MetricPoint.service).distinct()
-    rows = session.exec(statement).all()
-    return [row[0] for row in rows]
+def list_service_metrics(
+    session: Session,
+    *,
+    service: str,
+    metric: Optional[str] = None,
+    since: Optional[datetime] = None,
+    limit: int = 500,
+) -> List[MetricPoint]:
+    """
+    Compatibility helper used by simulate/refresh flows.
+
+    Returns metrics in chronological order (oldest -> newest).
+    """
+    statement = select(MetricPoint).where(MetricPoint.service == service)
+
+    if metric is not None:
+        statement = statement.where(MetricPoint.metric == metric)
+
+    if since is not None:
+        statement = statement.where(MetricPoint.timestamp >= since)
+
+    statement = statement.order_by(MetricPoint.timestamp.desc()).limit(limit)
+
+    results = session.exec(statement).all()
+    return list(reversed(results))
+
