@@ -58,4 +58,13 @@ class IncidentDetector:
         tracked = incident_crud.list_tracked_metrics(self.session)
         if tracked:
             return tracked
-        return metric_crud.list_service_metrics(self.session, DEFAULT_METRICS)
+
+        pairs: List[TrackedMetric] = []
+
+        services = metric_crud.list_services(self.session)
+        for service in services:
+            for metric in metric_crud.list_service_metrics(self.session, service):
+                if metric in DEFAULT_METRICS:
+                    pairs.append((service, metric))
+
+        return pairs

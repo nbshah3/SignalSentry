@@ -24,7 +24,6 @@ from app.services.event_bus import event_bus
 from app.services.incident_detector import IncidentDetector
 from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
-from app.services.simulator import SimulationPlan
 
 logger = logging.getLogger(__name__)
 
@@ -137,26 +136,33 @@ async def simulate_incident(
         if not metric_crud.list_services(session):
             seed_sample_data(session)
 
-        metrics, logs, plan = _inject_payments_spike(session)
+        before_keys = {
+            incident.incident_key for incident in incident_crud.list_active_incidents(session)
+        }
+
+        metrics, logs = _inject_payments_spike(session)
         detector = IncidentDetector(session)
-        before_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
         incidents = detector.evaluate_all_services()
-        after_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
-        created_ids = after_ids - before_ids
+        after_keys = {
+            incident.incident_key for incident in incident_crud.list_active_incidents(session)
+        }
+        created_keys = after_keys - before_keys
+        created_incidents = [
+            incident for incident in incidents if incident.incident_key in created_keys
+        ]
 
         for entry in metrics[-10:]:
             await _publish_metric_entry(entry)
 
-        for incident in incidents:
-            if incident.id in created_ids:
-                await _broadcast_incident(incident)
+        for incident in created_incidents:
+            await _broadcast_incident(incident)
 
         return {
             "ok": True,
-            "service": plan.service,
+            "service": "payments",
             "metrics_appended": len(metrics),
             "logs_appended": len(logs),
-            "created_incidents": len(created_ids),
+            "created_incidents": len(created_incidents),
         }
     except Exception as exc:  # pragma: no cover
         logger.exception("simulation failed")
@@ -202,7 +208,7 @@ async def _publish_metric_entry(entry: MetricPoint) -> None:
 
 def _inject_payments_spike(
     session: Session, minutes: int = 5
-) -> tuple[list[MetricPoint], list[LogEntry], SimulationPlan]:
+) -> tuple[list[MetricPoint], list[LogEntry]]:
     now = datetime.utcnow()
     metric_points = []
     for idx in range(minutes):
@@ -225,7 +231,7 @@ def _inject_payments_spike(
                 ),
             ]
         )
-    metrics = metric_crud.bulk_create_metrics(session, metric_points)
+    metrics = list(metric_crud.bulk_create_metrics(session, metric_points))
 
     log_payloads = []
     for idx in range(4):
@@ -240,7 +246,6 @@ def _inject_payments_spike(
                 context={"simulate": True, "step": idx},
             )
         )
-    logs = log_crud.bulk_create_logs(session, log_payloads)
+    logs = list(log_crud.bulk_create_logs(session, log_payloads))
 
-    plan = SimulationPlan(key="payments-spike", service="payments", metric="latency_p95_ms")
-    return metrics, logs, plan
+    return metrics, logs
