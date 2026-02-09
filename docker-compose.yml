@@ -13,7 +13,7 @@ services:
       - ./backend:/app/backend
       - ./data:/app/data:ro
       - ./exports:/app/exports
-      - ./backend/signalsentry.db:/app/backend/signalsentry.db
+      - signalsentry-db:/app/.data
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
@@ -29,3 +29,6 @@ services:
     volumes:
       - ./frontend:/app
     command: npm run dev
+
+volumes:
+  signalsentry-db:

@@ -14,6 +14,15 @@ import type {
 const SHOULD_AUTO_SEED =
   process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_AUTO_SEED === 'true';
 
+async function safeApiGet<T>(path: string, fallback: T): Promise<T> {
+  try {
+    return await apiGet<T>(path);
+  } catch (error) {
+    console.warn(`GET ${path} failed`, error);
+    return fallback;
+  }
+}
+
 export async function ensureDemoData(): Promise<boolean> {
   if (!SHOULD_AUTO_SEED) {
     return false;
@@ -29,12 +38,12 @@ export async function ensureDemoData(): Promise<boolean> {
 }
 
 export async function fetchActiveIncidents(): Promise<Incident[]> {
-  const data = await apiGet<IncidentListResponse>('/incidents/active');
+  const data = await safeApiGet<IncidentListResponse>('/incidents/active', { items: [] });
   return data.items;
 }
 
 export async function fetchRecentIncidents(): Promise<Incident[]> {
-  const data = await apiGet<IncidentListResponse>('/incidents/recent');
+  const data = await safeApiGet<IncidentListResponse>('/incidents/recent', { items: [] });
   return data.items;
 }
 
@@ -51,12 +60,15 @@ export async function fetchIncidentAnalysis(incidentId: string): Promise<RootCau
 }
 
 export async function fetchServiceSummary(): Promise<ServiceSummary[]> {
-  const data = await apiGet<ServiceSummaryResponse>('/services/summary');
+  const data = await safeApiGet<ServiceSummaryResponse>('/services/summary', { services: [] });
   return data.services;
 }
 
 export async function fetchServiceMetricSeries(service: string, metric: string): Promise<MetricSeriesResponse> {
-  return apiGet<MetricSeriesResponse>(`/services/${encodeURIComponent(service)}/metrics?metric=${metric}`);
+  return safeApiGet<MetricSeriesResponse>(
+    `/services/${encodeURIComponent(service)}/metrics?metric=${metric}`,
+    { service, metric, points: [] }
+  );
 }
 
 export async function fetchServiceLogs(service: string, params?: { level?: string; query?: string }): Promise<ServiceLogsResponse> {
@@ -64,5 +76,8 @@ export async function fetchServiceLogs(service: string, params?: { level?: strin
   if (params?.level) search.set('level', params.level);
   if (params?.query) search.set('query', params.query);
   const suffix = search.toString() ? `?${search.toString()}` : '';
-  return apiGet<ServiceLogsResponse>(`/services/${encodeURIComponent(service)}/logs${suffix}`);
+  return safeApiGet<ServiceLogsResponse>(
+    `/services/${encodeURIComponent(service)}/logs${suffix}`,
+    { service, items: [] }
+  );
 }
