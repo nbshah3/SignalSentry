@@ -109,9 +109,7 @@ def _parse_timestamp(value: str) -> datetime:
     return dt.astimezone(timezone.utc)
 
 
-def _latest_timestamp(
-    metrics: List[Dict[str, object]], logs: List[Dict[str, object]]
-) -> datetime:
+def _latest_timestamp(metrics: List[Dict[str, object]], logs: List[Dict[str, object]]) -> datetime:
     latest = datetime(1970, 1, 1, tzinfo=timezone.utc)
     for entry in metrics:
         ts = _parse_timestamp(entry["timestamp"])
