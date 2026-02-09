@@ -5,6 +5,8 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /app/.data && chmod 777 /app/.data
+
 COPY . .
 
 RUN if [ -f pyproject.toml ]; then pip install --upgrade pip && pip install .; \
