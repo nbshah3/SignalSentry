@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import json
-import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, List
 
 from sqlalchemy import delete, func, select
 from sqlmodel import Session
@@ -13,11 +12,9 @@ from app.models import Incident, LogEntry, MetricPoint
 from app.schemas import LogCreate, MetricPointCreate
 from app.services.incident_detector import IncidentDetector
 
-BASE_PATH = Path(__file__).resolve()
-DATA_FILENAMES = {
-    "metrics": "demo_metrics.json",
-    "logs": "demo_logs.json",
-}
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+METRICS_FILE = DATA_DIR / "demo_metrics.json"
+LOGS_FILE = DATA_DIR / "demo_logs.json"
 
 SERVICES = ["auth-service", "payments", "search", "recommendation-engine"]
 
@@ -35,13 +32,23 @@ def seed_sample_data(session: Session, *, force: bool = False) -> Dict[str, obje
         session.exec(delete(LogEntry))
         session.commit()
 
-    metrics_payload, logs_payload = _load_payloads()
-    metrics = [_build_metric(entry) for entry in metrics_payload]
-    logs = [_build_log(entry) for entry in logs_payload]
+    raw_metrics = _load_json(METRICS_FILE)
+    raw_logs = _load_json(LOGS_FILE)
+
+    # --- Make demo data "recent" ---
+    # Find the latest timestamp in the demo payloads and shift everything so the latest point is ~now.
+    latest_demo_ts = _latest_timestamp(raw_metrics, raw_logs)
+    now = datetime.now(timezone.utc)
+    shift = now - latest_demo_ts
+
+    metrics = [_build_metric(entry, shift=shift) for entry in raw_metrics]
+    logs = [_build_log(entry, shift=shift) for entry in raw_logs]
+
     session.add_all(metrics)
     session.add_all(logs)
     session.commit()
 
+    # Optionally run detection once so incidents exist immediately if detector flags anything
     detector = IncidentDetector(session)
     incidents = detector.evaluate_all_services()
 
@@ -53,8 +60,8 @@ def seed_sample_data(session: Session, *, force: bool = False) -> Dict[str, obje
     }
 
 
-def _build_metric(entry: Dict[str, object]) -> MetricPoint:
-    timestamp = _parse_timestamp(entry["timestamp"])
+def _build_metric(entry: Dict[str, object], *, shift: timedelta) -> MetricPoint:
+    timestamp = _parse_timestamp(entry["timestamp"]) + shift
     payload = MetricPointCreate(
         service=entry["service"],
         metric=entry["metric"],
@@ -64,10 +71,10 @@ def _build_metric(entry: Dict[str, object]) -> MetricPoint:
     return MetricPoint.model_validate(payload)
 
 
-def _build_log(entry: Dict[str, object]) -> LogEntry:
+def _build_log(entry: Dict[str, object], *, shift: timedelta) -> LogEntry:
     payload = LogCreate(
         service=entry["service"],
-        timestamp=_parse_timestamp(entry["timestamp"]),
+        timestamp=_parse_timestamp(entry["timestamp"]) + shift,
         level=entry.get("level", "INFO"),
         request_id=entry.get("request_id"),
         message=entry.get("message", ""),
@@ -85,92 +92,33 @@ def _build_log(entry: Dict[str, object]) -> LogEntry:
     )
 
 
-def _load_payloads() -> Tuple[List[Dict[str, object]], List[Dict[str, object]]]:
-    metrics = _load_from_disk(DATA_FILENAMES["metrics"])
-    logs = _load_from_disk(DATA_FILENAMES["logs"])
-    if metrics is not None and logs is not None:
-        return metrics, logs
-    return _generate_demo_payloads()
-
-
-def _load_from_disk(filename: str) -> List[Dict[str, object]] | None:
-    for candidate in _candidate_dirs():
-        path = candidate / filename
-        if path.exists():
-            return json.loads(path.read_text(encoding="utf-8"))
-    return None
-
-
-def _candidate_dirs() -> Iterable[Path]:
-    seen = set()
-    parents = [BASE_PATH.parent]
-    for idx in range(min(4, len(BASE_PATH.parents))):
-        parents.append(BASE_PATH.parents[idx])
-    for ancestor in parents:
-        candidate = ancestor / "data"
-        if candidate not in seen:
-            seen.add(candidate)
-            yield candidate
-    yield Path("/app/data")
-
-
-def _generate_demo_payloads() -> Tuple[List[Dict[str, object]], List[Dict[str, object]]]:
-    rng = random.Random(1337)
-    base_time = datetime.utcnow() - timedelta(minutes=30)
-    services = {
-        "auth-service": {"latency_ms": 110.0, "error_rate": 0.01},
-        "payments": {"latency_ms": 95.0, "error_rate": 0.012},
-        "search": {"latency_ms": 80.0, "error_rate": 0.008},
-        "recommendation-engine": {"latency_ms": 130.0, "error_rate": 0.009},
-    }
-    metrics: List[Dict[str, object]] = []
-    logs: List[Dict[str, object]] = []
-    for idx in range(30):
-        timestamp = (base_time + timedelta(minutes=idx)).isoformat() + "Z"
-        for service, baselines in services.items():
-            latency = baselines["latency_ms"] + rng.uniform(-5, 5)
-            error = baselines["error_rate"] + rng.uniform(-0.002, 0.002)
-            if service == "payments" and idx >= 25:
-                latency += 140
-                error += 0.04
-            metrics.append(
-                {
-                    "service": service,
-                    "metric": "latency_ms",
-                    "timestamp": timestamp,
-                    "value": round(latency, 3),
-                }
-            )
-            metrics.append(
-                {
-                    "service": service,
-                    "metric": "error_rate",
-                    "timestamp": timestamp,
-                    "value": round(max(error, 0), 4),
-                }
-            )
-    for service in services:
-        for i in range(5):
-            ts = (base_time + timedelta(minutes=i * 3)).isoformat() + "Z"
-            logs.append(
-                {
-                    "service": service,
-                    "timestamp": ts,
-                    "level": "ERROR" if service == "payments" and i >= 3 else "INFO",
-                    "request_id": f"demo-{service}-{i}",
-                    "message": (
-                        f"{service} anomaly detected"
-                        if service == "payments" and i >= 3
-                        else f"{service} heartbeat"
-                    ),
-                    "latency_ms": 320 if service == "payments" and i >= 3 else None,
-                    "context": {"service": service, "idx": i},
-                }
-            )
-    return metrics, logs
+def _load_json(path: Path) -> List[Dict[str, object]]:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _parse_timestamp(value: str) -> datetime:
+    # normalize Zulu time to offset format
     if value.endswith("Z"):
         value = value[:-1] + "+00:00"
-    return datetime.fromisoformat(value)
+    dt = datetime.fromisoformat(value)
+    # ensure timezone-aware (UTC)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def _latest_timestamp(
+    metrics: List[Dict[str, object]], logs: List[Dict[str, object]]
+) -> datetime:
+    latest = datetime(1970, 1, 1, tzinfo=timezone.utc)
+    for entry in metrics:
+        ts = _parse_timestamp(entry["timestamp"])
+        if ts > latest:
+            latest = ts
+    for entry in logs:
+        ts = _parse_timestamp(entry["timestamp"])
+        if ts > latest:
+            latest = ts
+    return latest
