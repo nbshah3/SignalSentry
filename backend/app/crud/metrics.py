@@ -47,7 +47,9 @@ def bulk_create_metrics(
     return entries
 
 
-def get_metric_series(session: Session, service: str, metric: str, limit: int = 200) -> List[MetricPoint]:
+def get_metric_series(
+    session: Session, service: str, metric: str, limit: int = 200
+) -> List[MetricPoint]:
     statement = (
         select(MetricPoint)
         .where(MetricPoint.service == service, MetricPoint.metric == metric)
