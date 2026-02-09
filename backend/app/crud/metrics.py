@@ -118,11 +118,7 @@ def list_service_metrics(
     - If `service` is a list/tuple of strings: query using IN (...) instead of crashing.
     """
     if isinstance(service, str):
-        statement = (
-            select(MetricPoint.metric)
-            .where(MetricPoint.service == service)
-            .distinct()
-        )
+        statement = select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
     elif isinstance(service, (list, tuple)):
         if not all(isinstance(s, str) for s in service):
             raise TypeError(f"service sequence must contain only strings, got: {service!r}")
@@ -132,7 +128,9 @@ def list_service_metrics(
             .distinct()
         )
     else:
-        raise TypeError(f"service must be a string or sequence of strings, got {type(service).__name__}")
+        raise TypeError(
+            f"service must be a string or sequence of strings, got {type(service).__name__}"
+        )
 
     rows = session.exec(statement).all()
 
