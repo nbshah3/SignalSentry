@@ -27,6 +27,7 @@ def create_app() -> FastAPI:
 
     @app.on_event("startup")
     def on_startup() -> None:  # pragma: no cover
+        logger.info("Using database %s", settings.database_url)
         init_db()
         with session_scope() as session:
             try:

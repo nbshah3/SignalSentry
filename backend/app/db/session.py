@@ -22,6 +22,10 @@ def _ensure_sqlite_dir() -> None:
     if not file_path.is_absolute():
         file_path = Path.cwd() / file_path
     file_path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        file_path.touch(exist_ok=True)
+    except OSError:
+        pass
 
 
 _ensure_sqlite_dir()

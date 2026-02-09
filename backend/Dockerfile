@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /app/.data && chmod 777 /app/.data
+RUN mkdir -p /var/lib/signalsentry && chmod 777 /var/lib/signalsentry
 
 COPY . .
 

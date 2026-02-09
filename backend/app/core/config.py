@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     app_name: str = "SignalSentry API"
     environment: str = "local"
     debug: bool = True
-    database_url: str = "sqlite:///./signalsentry.db"
+    database_url: str = "sqlite:////var/lib/signalsentry/signalsentry.db"
     log_level: str = "INFO"
     allowed_origins: List[str] = ["*"]
     postmortem_export_dir: str = "./exports"
