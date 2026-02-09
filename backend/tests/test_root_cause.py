@@ -25,4 +25,7 @@ def test_root_cause_keyword_hints(session) -> None:
         )
     ]
     hypotheses = analyzer._keyword_hypotheses(incident, logs)
-    assert any("timeout" in hyp.title.lower() or "db" in hyp.title.lower() for hyp in hypotheses)
+    assert any(
+        "timeout" in hyp.title.lower() or "db" in hyp.title.lower()
+        for hyp in hypotheses
+    )

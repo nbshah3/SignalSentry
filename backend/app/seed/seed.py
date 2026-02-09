@@ -78,7 +78,7 @@ def _build_log(entry: Dict[str, object], *, shift: timedelta) -> LogEntry:
         level=entry.get("level", "INFO"),
         request_id=entry.get("request_id"),
         message=entry.get("message", ""),
-        latency_ms=entry.get("latency_ms"),
+        latency_p95_ms=entry.get("latency_p95_ms"),
         context=entry.get("context"),
     )
     return LogEntry(
@@ -87,7 +87,7 @@ def _build_log(entry: Dict[str, object], *, shift: timedelta) -> LogEntry:
         level=payload.level,
         request_id=payload.request_id,
         message=payload.message,
-        latency_ms=payload.latency_ms,
+        latency_p95_ms=payload.latency_p95_ms,
         context=json.dumps(payload.context) if payload.context else None,
     )
 
@@ -109,7 +109,9 @@ def _parse_timestamp(value: str) -> datetime:
     return dt.astimezone(timezone.utc)
 
 
-def _latest_timestamp(metrics: List[Dict[str, object]], logs: List[Dict[str, object]]) -> datetime:
+def _latest_timestamp(
+    metrics: List[Dict[str, object]], logs: List[Dict[str, object]]
+) -> datetime:
     latest = datetime(1970, 1, 1, tzinfo=timezone.utc)
     for entry in metrics:
         ts = _parse_timestamp(entry["timestamp"])

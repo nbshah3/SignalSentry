@@ -15,5 +15,7 @@ def download_postmortem(filename: str) -> FileResponse:
     if not target.exists() or not target.is_file():
         raise HTTPException(status_code=404, detail="Postmortem not found")
 
-    media_type = "application/pdf" if target.suffix.lower() == ".pdf" else "application/json"
+    media_type = (
+        "application/pdf" if target.suffix.lower() == ".pdf" else "application/json"
+    )
     return FileResponse(target, media_type=media_type, filename=target.name)

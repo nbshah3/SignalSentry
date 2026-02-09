@@ -32,7 +32,9 @@ router = APIRouter(prefix="/incidents", tags=["incidents"])
 
 
 @router.get("/active", response_model=IncidentListResponse)
-def list_active_incidents(session: Session = Depends(get_session)) -> IncidentListResponse:
+def list_active_incidents(
+    session: Session = Depends(get_session),
+) -> IncidentListResponse:
     incidents = incident_crud.list_active_incidents(session)
     return IncidentListResponse(
         items=[IncidentRead.model_validate(incident) for incident in incidents]
@@ -40,7 +42,9 @@ def list_active_incidents(session: Session = Depends(get_session)) -> IncidentLi
 
 
 @router.get("/recent", response_model=IncidentListResponse)
-def list_recent_incidents(session: Session = Depends(get_session)) -> IncidentListResponse:
+def list_recent_incidents(
+    session: Session = Depends(get_session),
+) -> IncidentListResponse:
     incidents = incident_crud.list_recent_incidents(session)
     return IncidentListResponse(
         items=[IncidentRead.model_validate(incident) for incident in incidents]
@@ -70,11 +74,15 @@ async def refresh_incidents(
         return IncidentRefreshResponse(status="ok", incidents_created=len(incidents))
     except Exception as exc:  # pragma: no cover - defensive path
         logger.exception("incident refresh failed")
-        return IncidentRefreshResponse(status="error", incidents_created=0, reason=str(exc))
+        return IncidentRefreshResponse(
+            status="error", incidents_created=0, reason=str(exc)
+        )
 
 
 @router.post("/{incident_id}/resolve", response_model=IncidentRead)
-def resolve_incident(incident_id: int, session: Session = Depends(get_session)) -> IncidentRead:
+def resolve_incident(
+    incident_id: int, session: Session = Depends(get_session)
+) -> IncidentRead:
     incident = incident_crud.resolve_incident(session, incident_id)
     if not incident:
         raise HTTPException(status_code=404, detail="Incident not found")
@@ -82,7 +90,9 @@ def resolve_incident(incident_id: int, session: Session = Depends(get_session)) 
 
 
 @router.get("/{incident_id}", response_model=IncidentRead)
-def retrieve_incident(incident_id: int, session: Session = Depends(get_session)) -> IncidentRead:
+def retrieve_incident(
+    incident_id: int, session: Session = Depends(get_session)
+) -> IncidentRead:
     incident = session.get(Incident, incident_id)
     if not incident:
         raise HTTPException(status_code=404, detail="Incident not found")
@@ -115,7 +125,10 @@ def incident_timeline(
         window_end=incident.window_end,
         limit=240,
     )
-    points = [{"timestamp": point.timestamp.isoformat(), "value": point.value} for point in series]
+    points = [
+        {"timestamp": point.timestamp.isoformat(), "value": point.value}
+        for point in series
+    ]
     return IncidentTimelineResponse(
         incident_id=incident.id,
         metric=incident.metric,
@@ -126,16 +139,22 @@ def incident_timeline(
 
 
 @router.post("/simulate")
-async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, object]:
+async def simulate_incident(
+    session: Session = Depends(get_session),
+) -> dict[str, object]:
     try:
         if not metric_crud.list_services(session):
             seed_sample_data(session)
 
         metrics, logs, plan = _inject_payments_spike(session)
         detector = IncidentDetector(session)
-        before_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
+        before_ids = {
+            incident.id for incident in incident_crud.list_active_incidents(session)
+        }
         incidents = detector.evaluate_all_services()
-        after_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
+        after_ids = {
+            incident.id for incident in incident_crud.list_active_incidents(session)
+        }
         created_ids = after_ids - before_ids
 
         for entry in metrics[-10:]:
@@ -154,7 +173,9 @@ async def simulate_incident(session: Session = Depends(get_session)) -> dict[str
         }
     except Exception as exc:  # pragma: no cover
         logger.exception("simulation failed")
-        raise HTTPException(status_code=500, detail={"ok": False, "reason": str(exc)}) from exc
+        raise HTTPException(
+            status_code=500, detail={"ok": False, "reason": str(exc)}
+        ) from exc
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
@@ -207,7 +228,7 @@ def _inject_payments_spike(
             [
                 MetricPointCreate(
                     service="payments",
-                    metric="latency_ms",
+                    metric="latency_p95_ms",
                     timestamp=timestamp,
                     value=latency,
                 ),
@@ -236,5 +257,7 @@ def _inject_payments_spike(
         )
     logs = log_crud.bulk_create_logs(session, log_payloads)
 
-    plan = SimulationPlan(key="payments-spike", service="payments", metric="latency_ms")
+    plan = SimulationPlan(
+        key="payments-spike", service="payments", metric="latency_p95_ms"
+    )
     return metrics, logs, plan

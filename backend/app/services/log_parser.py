@@ -54,7 +54,11 @@ def parse_log_line(line: str) -> Optional[LogCreate]:
         timestamp = datetime.utcnow()
 
     level = "INFO"
-    if idx < len(tokens) and tokens[idx].isalpha() and tokens[idx].upper() == tokens[idx]:
+    if (
+        idx < len(tokens)
+        and tokens[idx].isalpha()
+        and tokens[idx].upper() == tokens[idx]
+    ):
         level = tokens[idx].upper()
         idx += 1
 

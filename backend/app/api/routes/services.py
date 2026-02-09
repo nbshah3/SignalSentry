@@ -7,7 +7,12 @@ from app.crud import logs as log_crud
 from app.crud import metrics as metric_crud
 from app.db.session import get_session
 from app.models import LogEntry
-from app.schemas import LogRead, ServiceLogsResponse, ServiceMetricsResponse, ServiceSummaryResponse
+from app.schemas import (
+    LogRead,
+    ServiceLogsResponse,
+    ServiceMetricsResponse,
+    ServiceSummaryResponse,
+)
 from app.services.service_summary import ServiceSummaryBuilder
 
 router = APIRouter(prefix="/services", tags=["services"])
@@ -26,10 +31,15 @@ def service_metrics(
     limit: int = Query(120, ge=10, le=500),
     session: Session = Depends(get_session),
 ) -> ServiceMetricsResponse:
-    series = metric_crud.get_metric_series(session, service=service, metric=metric, limit=limit)
+    series = metric_crud.get_metric_series(
+        session, service=service, metric=metric, limit=limit
+    )
     if not series:
         raise HTTPException(status_code=404, detail="Metric series not found")
-    points = [{"timestamp": point.timestamp.isoformat(), "value": point.value} for point in series]
+    points = [
+        {"timestamp": point.timestamp.isoformat(), "value": point.value}
+        for point in series
+    ]
     return ServiceMetricsResponse(service=service, metric=metric, points=points)
 
 

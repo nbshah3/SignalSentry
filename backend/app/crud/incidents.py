@@ -85,7 +85,9 @@ def resolve_incident(session: Session, incident_id: int) -> Incident | None:
     return incident
 
 
-def list_service_metrics(session: Session, metrics: Sequence[str]) -> List[TrackedMetric]:
+def list_service_metrics(
+    session: Session, metrics: Sequence[str]
+) -> List[TrackedMetric]:
     statement = select(MetricPoint.service, MetricPoint.metric).distinct()
     rows = session.exec(statement).all()
     tracked: List[TrackedMetric] = []

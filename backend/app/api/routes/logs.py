@@ -18,11 +18,15 @@ async def ingest_log_file(
     try:
         text = content.decode("utf-8")
     except UnicodeDecodeError as exc:  # pragma: no cover - guardrail
-        raise HTTPException(status_code=400, detail="Invalid encoding in log file") from exc
+        raise HTTPException(
+            status_code=400, detail="Invalid encoding in log file"
+        ) from exc
 
     parsed_logs = parse_log_blob(text)
     created = log_crud.bulk_create_logs(session, parsed_logs)
-    return LogIngestResult(ingested=len(created), skipped=len(text.splitlines()) - len(created))
+    return LogIngestResult(
+        ingested=len(created), skipped=len(text.splitlines()) - len(created)
+    )
 
 
 @router.post("/logs", response_model=LogIngestResult)
@@ -31,4 +35,6 @@ def ingest_log_batch(
     session: Session = Depends(get_session),
 ) -> LogIngestResult:
     created = log_crud.bulk_create_logs(session, payload.logs)
-    return LogIngestResult(ingested=len(created), skipped=len(payload.logs) - len(created))
+    return LogIngestResult(
+        ingested=len(created), skipped=len(payload.logs) - len(created)
+    )

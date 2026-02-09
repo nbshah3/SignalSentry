@@ -73,15 +73,20 @@ class RootCauseAnalyzer:
                     title=hyp.title,
                     confidence=hyp.confidence,
                     evidence=[
-                        Evidence(type=item.source, detail=item.detail) for item in hyp.evidence
+                        Evidence(type=item.source, detail=item.detail)
+                        for item in hyp.evidence
                     ],
                 )
                 for hyp in ordered
             ],
         )
 
-    def _collect_metric_context(self, incident: Incident) -> Dict[str, List[Tuple[str, float]]]:
-        metrics_for_service = metric_crud.get_metrics_for_service(self.session, incident.service)
+    def _collect_metric_context(
+        self, incident: Incident
+    ) -> Dict[str, List[Tuple[str, float]]]:
+        metrics_for_service = metric_crud.get_metrics_for_service(
+            self.session, incident.service
+        )
         to_pull = set(metrics_for_service) | set(DEFAULT_METRICS)
         to_pull.add(incident.metric)
         context: Dict[str, List[Tuple[str, float]]] = {}
@@ -132,7 +137,9 @@ class RootCauseAnalyzer:
                 detail=f"{incident.metric} and {metric} correlation {corr:.2f} across incident window",
             )
             results.append(
-                HypothesisResult(title=title, confidence=confidence, evidence=[evidence])
+                HypothesisResult(
+                    title=title, confidence=confidence, evidence=[evidence]
+                )
             )
 
         # specialized heuristics

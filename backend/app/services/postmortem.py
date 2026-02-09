@@ -57,7 +57,9 @@ class PostmortemGenerator:
         self.export_dir = Path(export_dir)
         self.export_dir.mkdir(parents=True, exist_ok=True)
 
-    def generate(self, incident: Incident, analysis: RootCauseResponse) -> PostmortemArtifacts:
+    def generate(
+        self, incident: Incident, analysis: RootCauseResponse
+    ) -> PostmortemArtifacts:
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         base_name = f"incident_{incident.id}_{timestamp}"
         json_path = self.export_dir / f"{base_name}.json"
@@ -74,13 +76,17 @@ class PostmortemGenerator:
             pdf_path=pdf_path,
         )
 
-    def _build_payload(self, incident: Incident, analysis: RootCauseResponse) -> Dict[str, object]:
+    def _build_payload(
+        self, incident: Incident, analysis: RootCauseResponse
+    ) -> Dict[str, object]:
         top_hypothesis = (
             analysis.hypotheses[0].title
             if analysis.hypotheses
             else incident.summary or "Incident detected"
         )
-        action_items = ACTION_HINTS.get(incident.metric, ["Complete RCA and document mitigations."])
+        action_items = ACTION_HINTS.get(
+            incident.metric, ["Complete RCA and document mitigations."]
+        )
         timeline = [
             {"label": "Window start", "timestamp": incident.window_start.isoformat()},
             {"label": "Window end", "timestamp": incident.window_end.isoformat()},
@@ -128,7 +134,9 @@ class PostmortemGenerator:
         y = self._write_section(
             c, y - 8, "Hypotheses", payload["analysis"].get("hypotheses", []), height
         )
-        y = self._write_list_section(c, y, "Action Items", payload["action_items"], height)
+        y = self._write_list_section(
+            c, y, "Action Items", payload["action_items"], height
+        )
         y = self._write_list_section(
             c,
             y,
@@ -174,7 +182,12 @@ class PostmortemGenerator:
         return y
 
     def _write_list_section(
-        self, c: canvas.Canvas, y: float, title: str, items: List[str], page_height: float
+        self,
+        c: canvas.Canvas,
+        y: float,
+        title: str,
+        items: List[str],
+        page_height: float,
     ) -> float:
         if y < 120:
             c.showPage()

@@ -61,7 +61,11 @@ def create_metric_points() -> List[Dict[str, object]]:
                 value = base_value + noise(0, base_value * 0.02)
 
                 for incident in INCIDENT_WINDOWS:
-                    if incident.service == service and incident.metric == metric and incident.start_idx <= idx <= incident.end_idx:
+                    if (
+                        incident.service == service
+                        and incident.metric == metric
+                        and incident.start_idx <= idx <= incident.end_idx
+                    ):
                         if metric == "memory_rss_mb":
                             # slow leak trend rather than sudden spike
                             value += (idx - incident.start_idx) * incident.magnitude
@@ -90,7 +94,11 @@ def create_log_events() -> List[Dict[str, object]]:
             "level": "ERROR",
             "latency_ms": 320,
             "message": "Checkout timeout while waiting on db-primary",
-            "context": {"request_id": "req-501", "path": "/checkout", "keyword": "timeout"},
+            "context": {
+                "request_id": "req-501",
+                "path": "/checkout",
+                "keyword": "timeout",
+            },
         },
         {
             "timestamp": (START + timedelta(minutes=65)).isoformat() + "Z",
@@ -98,7 +106,11 @@ def create_log_events() -> List[Dict[str, object]]:
             "level": "ERROR",
             "latency_ms": 410,
             "message": "DB saturation suspected: connection pool exhausted",
-            "context": {"request_id": "req-777", "path": "/orders", "keyword": "DB saturation"},
+            "context": {
+                "request_id": "req-777",
+                "path": "/orders",
+                "keyword": "DB saturation",
+            },
         },
         {
             "timestamp": (START + timedelta(minutes=34)).isoformat() + "Z",
