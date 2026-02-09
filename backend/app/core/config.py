@@ -15,9 +15,7 @@ class Settings(BaseSettings):
     allowed_origins: List[str] = ["*"]
     postmortem_export_dir: str = "./exports"
 
-    model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", extra="ignore"
-    )
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
 @lru_cache(maxsize=1)

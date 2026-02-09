@@ -60,9 +60,7 @@ def get_metric_series(
     return list(reversed(results))
 
 
-def get_latest_metric(
-    session: Session, service: str, metric: str
-) -> Optional[MetricPoint]:
+def get_latest_metric(session: Session, service: str, metric: str) -> Optional[MetricPoint]:
     statement = (
         select(MetricPoint)
         .where(MetricPoint.service == service, MetricPoint.metric == metric)
@@ -120,14 +118,10 @@ def list_service_metrics(
     - If `service` is a list/tuple of strings: query using IN (...) instead of crashing.
     """
     if isinstance(service, str):
-        statement = (
-            select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
-        )
+        statement = select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
     elif isinstance(service, (list, tuple)):
         if not all(isinstance(s, str) for s in service):
-            raise TypeError(
-                f"service sequence must contain only strings, got: {service!r}"
-            )
+            raise TypeError(f"service sequence must contain only strings, got: {service!r}")
         statement = (
             select(MetricPoint.metric)
             .where(MetricPoint.service.in_(service))  # type: ignore[attr-defined]

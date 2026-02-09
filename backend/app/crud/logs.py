@@ -85,9 +85,7 @@ def list_recent_logs(
     if level:
         statement = statement.where(LogEntry.level == level.upper())
     if query:
-        statement = statement.where(
-            func.lower(LogEntry.message).contains(query.lower())
-        )
+        statement = statement.where(func.lower(LogEntry.message).contains(query.lower()))
 
     statement = statement.order_by(LogEntry.timestamp.desc()).limit(limit)
     rows = session.exec(statement).all()

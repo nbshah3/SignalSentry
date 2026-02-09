@@ -7,9 +7,7 @@ from sqlmodel import Session, SQLModel, create_engine
 
 from app.core.config import settings
 
-connect_args = (
-    {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
-)
+connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
 
 
 def _ensure_sqlite_dir() -> None:

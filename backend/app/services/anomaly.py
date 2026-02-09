@@ -66,9 +66,7 @@ def detect_anomaly(
     ewma_delta = abs(observed - ewma_baseline)
     pct_change = abs((observed - baseline) / (abs(baseline) + 1e-6))
 
-    severity_score = (
-        pct_change * 45 + z_val * 20 + (ewma_delta / (abs(baseline) + 1e-6)) * 25
-    )
+    severity_score = pct_change * 45 + z_val * 20 + (ewma_delta / (abs(baseline) + 1e-6)) * 25
 
     severity = min(100, int(round(severity_score)))
     if severity < 55:
@@ -77,7 +75,9 @@ def detect_anomaly(
     window_start = timestamps[-window_size]
     window_end = timestamps[-1]
 
-    summary = f"{metric} deviated by {pct_change:.1%} (baseline {baseline:.2f}, observed {observed:.2f})"
+    summary = (
+        f"{metric} deviated by {pct_change:.1%} (baseline {baseline:.2f}, observed {observed:.2f})"
+    )
 
     return AnomalyAssessment(
         severity=severity,

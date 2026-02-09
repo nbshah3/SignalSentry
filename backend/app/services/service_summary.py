@@ -44,13 +44,10 @@ class ServiceSummaryBuilder:
     def _sparkline_payload(self, service: str) -> Dict[str, List[Dict[str, float]]]:
         payload: Dict[str, List[Dict[str, float]]] = {}
         for metric in SPARKLINE_METRICS:
-            series = metric_crud.get_metric_series(
-                self.session, service, metric, limit=30
-            )
+            series = metric_crud.get_metric_series(self.session, service, metric, limit=30)
             if not series:
                 continue
             payload[metric] = [
-                {"timestamp": point.timestamp.isoformat(), "value": point.value}
-                for point in series
+                {"timestamp": point.timestamp.isoformat(), "value": point.value} for point in series
             ]
         return payload
