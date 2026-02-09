@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime, timedelta
 from typing import Iterable, List, Optional
 
@@ -45,9 +47,7 @@ def bulk_create_metrics(
     return entries
 
 
-def get_metric_series(
-    session: Session, service: str, metric: str, limit: int = 200
-) -> List[MetricPoint]:
+def get_metric_series(session: Session, service: str, metric: str, limit: int = 200) -> List[MetricPoint]:
     statement = (
         select(MetricPoint)
         .where(MetricPoint.service == service, MetricPoint.metric == metric)
@@ -79,6 +79,7 @@ def get_metrics_window(
 ) -> List[MetricPoint]:
     lower = window_start - timedelta(minutes=padding_minutes)
     upper = window_end + timedelta(minutes=padding_minutes)
+
     statement = (
         select(MetricPoint)
         .where(
@@ -93,35 +94,29 @@ def get_metrics_window(
     return session.exec(statement).all()
 
 
-def get_metrics_for_service(session: Session, service: str) -> List[str]:
+# ✅ Used by /api/v1/services/... to populate dropdowns / pages
+def list_services(session: Session) -> List[str]:
+    statement = select(MetricPoint.service).distinct()
+    rows = session.exec(statement).all()
+
+    # sqlmodel may return tuples depending on driver; normalize
+    out: List[str] = []
+    for row in rows:
+        out.append(row[0] if isinstance(row, tuple) else row)
+    return out
+
+
+# ✅ Used by services endpoints and simulator logic
+def list_service_metrics(session: Session, service: str) -> List[str]:
     statement = select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
     rows = session.exec(statement).all()
-    return [row[0] for row in rows]
+
+    out: List[str] = []
+    for row in rows:
+        out.append(row[0] if isinstance(row, tuple) else row)
+    return out
 
 
-def list_service_metrics(
-    session: Session,
-    *,
-    service: str,
-    metric: Optional[str] = None,
-    since: Optional[datetime] = None,
-    limit: int = 500,
-) -> List[MetricPoint]:
-    """
-    Compatibility helper used by simulate/refresh flows.
-
-    Returns metrics in chronological order (oldest -> newest).
-    """
-    statement = select(MetricPoint).where(MetricPoint.service == service)
-
-    if metric is not None:
-        statement = statement.where(MetricPoint.metric == metric)
-
-    if since is not None:
-        statement = statement.where(MetricPoint.timestamp >= since)
-
-    statement = statement.order_by(MetricPoint.timestamp.desc()).limit(limit)
-
-    results = session.exec(statement).all()
-    return list(reversed(results))
-
+# Backward-compat alias (if older code calls this name)
+def get_metrics_for_service(session: Session, service: str) -> List[str]:
+    return list_service_metrics(session, service)
