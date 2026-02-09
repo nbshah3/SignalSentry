@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, Sequence, Union
 
 from sqlmodel import Session, select
 
@@ -96,21 +96,44 @@ def get_metrics_window(
     return session.exec(statement).all()
 
 
-# ✅ Used by /api/v1/services/... to populate dropdowns / pages
 def list_services(session: Session) -> List[str]:
     statement = select(MetricPoint.service).distinct()
     rows = session.exec(statement).all()
 
-    # sqlmodel may return tuples depending on driver; normalize
     out: List[str] = []
     for row in rows:
         out.append(row[0] if isinstance(row, tuple) else row)
     return out
 
 
-# ✅ Used by services endpoints and simulator logic
-def list_service_metrics(session: Session, service: str) -> List[str]:
-    statement = select(MetricPoint.metric).where(MetricPoint.service == service).distinct()
+def list_service_metrics(
+    session: Session,
+    service: Union[str, Sequence[str]],
+) -> List[str]:
+    """
+    Returns all distinct metric names for a service.
+
+    Defensive behavior:
+    - If `service` is a string: standard query.
+    - If `service` is a list/tuple of strings: query using IN (...) instead of crashing.
+    """
+    if isinstance(service, str):
+        statement = (
+            select(MetricPoint.metric)
+            .where(MetricPoint.service == service)
+            .distinct()
+        )
+    elif isinstance(service, (list, tuple)):
+        if not all(isinstance(s, str) for s in service):
+            raise TypeError(f"service sequence must contain only strings, got: {service!r}")
+        statement = (
+            select(MetricPoint.metric)
+            .where(MetricPoint.service.in_(service))  # type: ignore[attr-defined]
+            .distinct()
+        )
+    else:
+        raise TypeError(f"service must be a string or sequence of strings, got {type(service).__name__}")
+
     rows = session.exec(statement).all()
 
     out: List[str] = []
@@ -119,6 +142,5 @@ def list_service_metrics(session: Session, service: str) -> List[str]:
     return out
 
 
-# Backward-compat alias (if older code calls this name)
 def get_metrics_for_service(session: Session, service: str) -> List[str]:
     return list_service_metrics(session, service)
