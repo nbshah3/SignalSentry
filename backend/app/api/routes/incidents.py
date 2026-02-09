@@ -1,14 +1,16 @@
 import logging
-from statistics import fmean
+from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session
 
 from app.core.config import settings
 from app.crud import incidents as incident_crud
+from app.crud import logs as log_crud
 from app.crud import metrics as metric_crud
 from app.db.session import get_session
-from app.models import Incident, MetricPoint
+from app.models import Incident, LogEntry, MetricPoint
+from app.schemas import LogCreate, MetricPointCreate
 from app.schemas.incidents import (
     IncidentListResponse,
     IncidentRead,
@@ -17,12 +19,12 @@ from app.schemas.incidents import (
 )
 from app.schemas.postmortem import PostmortemResponse
 from app.schemas.root_cause import RootCauseResponse
-from app.services.anomaly import AnomalyAssessment
+from app.seed import seed_sample_data
 from app.services.event_bus import event_bus
 from app.services.incident_detector import IncidentDetector
 from app.services.postmortem import PostmortemGenerator
 from app.services.root_cause import RootCauseAnalyzer
-from app.services.simulator import IncidentSimulator, SimulationPlan
+from app.services.simulator import SimulationPlan
 
 logger = logging.getLogger(__name__)
 
@@ -126,30 +128,33 @@ def incident_timeline(
 @router.post("/simulate")
 async def simulate_incident(session: Session = Depends(get_session)) -> dict[str, object]:
     try:
-        simulator = IncidentSimulator(session)
-        metrics, logs, plan = simulator.run()
-        detector = IncidentDetector(session)
-        incident = detector.evaluate_metric(plan.service, plan.metric)
+        if not metric_crud.list_services(session):
+            seed_sample_data(session)
 
-        if not incident:
-            incident = _create_simulated_incident(session, plan)
+        metrics, logs, plan = _inject_payments_spike(session)
+        detector = IncidentDetector(session)
+        before_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
+        incidents = detector.evaluate_all_services()
+        after_ids = {incident.id for incident in incident_crud.list_active_incidents(session)}
+        created_ids = after_ids - before_ids
 
         for entry in metrics[-10:]:
             await _publish_metric_entry(entry)
 
-        incident_id = incident.id if incident else None
-        if incident:
-            await _broadcast_incident(incident)
+        for incident in incidents:
+            if incident.id in created_ids:
+                await _broadcast_incident(incident)
 
         return {
             "ok": True,
-            "incident_id": incident_id,
+            "service": plan.service,
             "metrics_appended": len(metrics),
             "logs_appended": len(logs),
+            "created_incidents": len(created_ids),
         }
     except Exception as exc:  # pragma: no cover
         logger.exception("simulation failed")
-        return {"ok": False, "reason": str(exc)}
+        raise HTTPException(status_code=500, detail={"ok": False, "reason": str(exc)}) from exc
 
 
 @router.post("/{incident_id}/postmortem", response_model=PostmortemResponse)
@@ -189,32 +194,47 @@ async def _publish_metric_entry(entry: MetricPoint) -> None:
     await event_bus.publish({"type": "metric_update", **event})
 
 
-def _create_simulated_incident(session: Session, plan: SimulationPlan) -> Incident | None:
-    series = metric_crud.get_metric_series(session, plan.service, plan.metric, limit=80)
-    if len(series) < 12:
-        return None
+def _inject_payments_spike(
+    session: Session, minutes: int = 5
+) -> tuple[list[MetricPoint], list[LogEntry], SimulationPlan]:
+    now = datetime.utcnow()
+    metric_points = []
+    for idx in range(minutes):
+        timestamp = now - timedelta(minutes=minutes - idx)
+        latency = 220 + idx * 25
+        error_rate = 0.03 + idx * 0.015
+        metric_points.extend(
+            [
+                MetricPointCreate(
+                    service="payments",
+                    metric="latency_ms",
+                    timestamp=timestamp,
+                    value=latency,
+                ),
+                MetricPointCreate(
+                    service="payments",
+                    metric="error_rate",
+                    timestamp=timestamp,
+                    value=error_rate,
+                ),
+            ]
+        )
+    metrics = metric_crud.bulk_create_metrics(session, metric_points)
 
-    baseline_values = [point.value for point in series[:-10]]
-    recent_values = [point.value for point in series[-10:]]
-    if not baseline_values:
-        return None
+    log_payloads = []
+    for idx in range(4):
+        log_payloads.append(
+            LogCreate(
+                service="payments",
+                timestamp=now - timedelta(minutes=idx),
+                level="ERROR",
+                request_id=f"simulate-payments-{idx}",
+                message="payments latency spike detected",
+                latency_ms=350 + idx * 15,
+                context={"simulate": True, "step": idx},
+            )
+        )
+    logs = log_crud.bulk_create_logs(session, log_payloads)
 
-    baseline = fmean(baseline_values)
-    observed = fmean(recent_values)
-    severity = min(100, int(abs(observed - baseline) / (abs(baseline) + 1e-6) * 120))
-    assessment = AnomalyAssessment(
-        severity=severity,
-        baseline=baseline,
-        observed=observed,
-        window_start=series[-10].timestamp,
-        window_end=series[-1].timestamp,
-        detector="simulation",
-        summary=f"{plan.metric} deviated during simulation",
-    )
-    return incident_crud.upsert_incident(
-        session=session,
-        incident_key=f"simulate:{plan.service}:{plan.metric}",
-        service=plan.service,
-        metric=plan.metric,
-        assessment=assessment,
-    )
+    plan = SimulationPlan(key="payments-spike", service="payments", metric="latency_ms")
+    return metrics, logs, plan
